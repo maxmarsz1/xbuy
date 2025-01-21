@@ -11,15 +11,15 @@
 </head>
 <body id="login">
     <header>
-        <a href="index.html">
+        <a href="index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
-        <a href="register.html">Rejestracja</a>
+        <a href="register">Rejestracja</a>
     </header>
     <div id="auth-wrapper">
         <div id="left-column">
             <div class="wrapper">
-                <a href="index.html">
+                <a href="index">
                     <div class="logo-container">
                         <img src="../assets/images/logo_big.svg" alt="logo">
                         <span>buy</span>
@@ -31,12 +31,19 @@
         <div id="right-column">
             <div class="wrapper">
                 <h2>Logowanie</h2>
-                <form action="post">
+                <form action="login" method="post">
                     <input type="text" name="username" placeholder="nazwa użytkownika" id="">
                     <input type="password" name="password" placeholder="hasło" id="">
+                    <?php
+                    if (isset($messages)) {
+                        foreach ($messages as $message) {
+                            echo '<p class="error">' . $message . '</p>';
+                        }
+                    }
+                    ?>
                     <input type="submit" value="Zaloguj się">
                 </form>
-                <div class="no-account">Jeśli nie masz konta, <a href="register.html">zarejestruj się</a></div>
+                <div class="no-account">Jeśli nie masz konta, <a href="register">zarejestruj się</a></div>
             </div>
         </div>
     </div>

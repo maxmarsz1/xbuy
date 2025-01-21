@@ -100,6 +100,10 @@ form input[type="submit"]{
 }
 #right-column form input[type="submit"]{
     margin-top: 1rem;
+    transition: .1s all ease-in-out;
+}
+#right-column form input[type="submit"]:hover{
+    background-color: var(--secondary-color);
 }
 
 #right-column form input{
