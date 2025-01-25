@@ -39,6 +39,43 @@
             </ul>
         </div>
     </header>
+    <main>
+        <div class="wrapper">
+            <h2>Najnowsze oferty - Kraków</h2>
+            <div id="offers">
+                <div class="offer">
+                    <img src="../assets/images/offer.png" alt="offer">
+                    <div class="offer-info">
+                        <div class="top">
+                            <h3>Oferta 2</h3>
+                            <p class="location">Basztowa, Kraków</p>
+                        </div>
+                        <p class="price">100 zł</p>
+                    </div>
+                </div>
+                <div class="offer">
+                    <img src="../assets/images/offer.png" alt="offer">
+                    <div class="offer-info">
+                        <div class="top">
+                            <h3>Oferta 2</h3>
+                            <p class="location">Basztowa, Kraków</p>
+                        </div>
+                        <p class="price">100 zł</p>
+                    </div>
+                </div>
+                <div class="offer">
+                    <img src="../assets/images/offer.png" alt="offer">
+                    <div class="offer-info">
+                        <div class="top">
+                            <h3>Oferta 2</h3>
+                            <p class="location">Basztowa, Kraków</p>
+                        </div>
+                        <p class="price">100 zł</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
     <div id="dimmed"></div>
     <script src="../assets/js/theme.js"></script>
 </body>
