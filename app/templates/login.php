@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Zaloguj się | XBuy</title>
     <link rel="stylesheet" href="../assets/css/theme.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
 </head>
 <body id="login">
     <header>
-        <a href="index">
+        <a href="home">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <a href="register">Rejestracja</a>
@@ -19,7 +19,7 @@
     <div id="auth-wrapper">
         <div id="left-column">
             <div class="wrapper">
-                <a href="index">
+                <a href="home">
                     <div class="logo-container">
                         <img src="../assets/images/logo_big.svg" alt="logo">
                         <span>buy</span>

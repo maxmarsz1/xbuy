@@ -20,6 +20,9 @@ class Routing {
 
     public static function run($url) {
         $action = explode('/', $url)[0];
+        if ($action == "" || $action == "home"){
+            $action = 'offers';
+        }
 
         if (!array_key_exists($action, self::$routes)) {
             die('404');

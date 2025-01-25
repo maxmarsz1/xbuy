@@ -8,6 +8,6 @@ git clone https://github.com/maxmarsz1/xbuy
 ```
 run in project directory:
 ```
-docker-compose up build
+docker-compose up -d
 ```
 Project will be available at [localhost:8080](http://localhost:8080)
