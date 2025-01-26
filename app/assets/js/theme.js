@@ -23,10 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         dimmed.style.display = 'block';
     })
 
-    mobileSearchIcon.addEventListener('click', () => {
-
-    })
-
     dimmed.addEventListener('click', () => {
         const activeElement = document.querySelector('.active');
         activeElement.classList.remove('active');

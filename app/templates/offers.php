@@ -15,7 +15,7 @@
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <ul class="links">
-            <li class="hidden-mobile"><a href="add-offer">Dodaj ogłoszenie</a></li>
+            <li class="hidden-mobile"><a href="addOffer">Dodaj ogłoszenie</a></li>
             <li class="hidden-mobile"><a href="categories">
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
@@ -30,7 +30,7 @@
         </ul>
         <div id="mobile-menu">
             <ul class="links">
-                <li><a href="add-offer">Dodaj ogłoszenie</a></li>
+                <li><a href="addOffer">Dodaj ogłoszenie</a></li>
                 <li class="dropdown"><a href="categories">
                     Kategorie
                     <img src="../assets/images/dropdown.svg" alt="dropdown">
@@ -43,7 +43,7 @@
         <div class="wrapper">
             <h2>Najnowsze oferty - Kraków</h2>
             <div id="offers">
-                <div class="offer">
+                <a href="" class="offer">
                     <img src="../assets/images/offer.png" alt="offer">
                     <div class="offer-info">
                         <div class="top">
@@ -52,8 +52,8 @@
                         </div>
                         <p class="price">100 zł</p>
                     </div>
-                </div>
-                <div class="offer">
+                </a>
+                <a href="" class="offer">
                     <img src="../assets/images/offer.png" alt="offer">
                     <div class="offer-info">
                         <div class="top">
@@ -62,8 +62,8 @@
                         </div>
                         <p class="price">100 zł</p>
                     </div>
-                </div>
-                <div class="offer">
+                </a>
+                <a href="" class="offer">
                     <img src="../assets/images/offer.png" alt="offer">
                     <div class="offer-info">
                         <div class="top">
@@ -72,10 +72,47 @@
                         </div>
                         <p class="price">100 zł</p>
                     </div>
-                </div>
+                </a>
+            </div>
+            <div class="pagination">
+                <a href="" class="active">1</a>
+                <a href="">2</a>
+                <a href="">3</a>
             </div>
         </div>
     </main>
+    <footer>
+        <a href="home" class="logo">
+            <img src="../assets/images/logo_big.svg" alt="logo">
+        </a>
+        <section class="right">
+            <div class="links-wrapper">
+                <h3>xbuy</h3>
+                <ul class="links">
+                    <li><a href="">polityka prywatności</a></li>
+                    <li><a href="">regulamin</a></li>
+                    <li><a href="">politka cookies</a></li>
+                    <li><a href="">zasady bezpieczeństwa</a></li>
+                </ul>
+            </div>
+            <div class="links-wrapper">
+                <ul class="links">
+                    <li><a href="">o nas</a></li>
+                    <li><a href="">blog</a></li>
+                    <li><a href="">reklama</a></li>
+                    <li><a href="">pomoc</a></li>
+                </ul>
+            </div>
+            <div class="links-wrapper contact">
+                <h3>kontakt</h3>
+                <ul class="links">
+                    <li><a href="">+48 000 000 000</a></li>
+                    <li><a href="">support@xbuy.com</a></li>
+                </ul>
+            </div>
+        </section>
+        
+    </footer>
     <div id="dimmed"></div>
     <script src="../assets/js/theme.js"></script>
 </body>

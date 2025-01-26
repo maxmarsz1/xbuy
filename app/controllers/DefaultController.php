@@ -15,5 +15,9 @@ class DefaultController extends AppController {
         $this->render('offers');
     }
 
+    public function addOffer() {
+        $this->render('addOffer');
+    }
+
 
 }
