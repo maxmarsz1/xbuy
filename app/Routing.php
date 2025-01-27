@@ -2,6 +2,7 @@
 
 require_once 'controllers/DefaultController.php';
 require_once 'controllers/SecurityController.php';
+require_once 'controllers/OfferControler.php';
 
 class Routing {
     public static $routes;
@@ -22,7 +23,7 @@ class Routing {
         $segments = explode('/', $url);
         $action = $segments[0];
 
-        if ($action == "" || $action == "home") {
+        if ($action == "" || $action == "index") {
             $action = 'offers';
         }
 

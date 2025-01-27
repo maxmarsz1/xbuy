@@ -11,7 +11,7 @@
 </head>
 <body id="add-offer">
     <header>
-        <a href="home">
+        <a href="index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <ul class="links">
@@ -43,7 +43,7 @@
         <div class="wrapper">
             <h2>Nowa oferta</h2>
 
-            <form action="addOffer" method="post" enctype="multipart/form-data">
+            <form action="add-offer" method="post" enctype="multipart/form-data">
                 <label for="title">
                     Tytuł oferty:
                     <input type="text" name="title" required>
@@ -65,7 +65,7 @@
                 <label for="image">
                     Zdjecie:
                     <span class="image">
-                        <input type="file" name="image" accept="image/*" required>
+                        <input type="file" name="file" accept="image/*" required>
                         <div class="image-btn">Wybierz zdjecie</div>
                     </span>
                 </label>
@@ -75,7 +75,7 @@
         </div>
     </main>
     <footer>
-        <a href="home" class="logo">
+        <a href="index" class="logo">
             <img src="../assets/images/logo_big.svg" alt="logo">
         </a>
         <section class="right">

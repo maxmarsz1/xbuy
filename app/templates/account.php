@@ -11,7 +11,7 @@
 </head>
 <body id="account">
     <header>
-        <a href="home">
+        <a href="index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <ul class="links">
@@ -63,7 +63,7 @@
         </div>
     </main>
     <footer>
-        <a href="home" class="logo">
+        <a href="index" class="logo">
             <img src="../assets/images/logo_big.svg" alt="logo">
         </a>
         <section class="right">

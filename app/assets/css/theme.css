@@ -395,6 +395,13 @@ footer h3{
     height: 100px;
     object-fit: contain;
 }
+.message{
+    background: var(--main-color);
+    padding: .5rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1rem;
+    color: white;
+}
 @media (max-width: 991px){
     #offers-container .offer{
         width: 100%;

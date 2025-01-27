@@ -11,7 +11,7 @@
 </head>
 <body id="offers">
     <header>
-        <a href="home">
+        <a href="index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <ul class="links">
@@ -41,6 +41,13 @@
     </header>
     <main>
         <div class="wrapper">
+            <?php
+            if (isset($messages)) {
+                foreach ($messages as $message) {
+                    echo '<p class="message">' . $message . '</p>';
+                }
+            }
+            ?>
             <h2>Najnowsze oferty - Kraków</h2>
             <div id="offers-container">
                 <a href="" class="offer">
@@ -112,7 +119,7 @@
         </div>
     </main>
     <footer>
-        <a href="home" class="logo">
+        <a href="index" class="logo">
             <img src="../assets/images/logo_big.svg" alt="logo">
         </a>
         <section class="right">

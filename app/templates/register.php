@@ -11,7 +11,7 @@
 </head>
 <body id="login">
     <header>
-        <a href="home">
+        <a href="index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <a href="login">Logowanie</a>
@@ -19,7 +19,7 @@
     <div id="auth-wrapper">
         <div id="left-column">
             <div class="wrapper">
-                <a href="home">
+                <a href="index">
                     <div class="logo-container">
                         <img src="../assets/images/logo_big.svg" alt="logo">
                         <span>buy</span>
