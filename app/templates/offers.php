@@ -9,13 +9,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body>
+<body id="offers">
     <header>
         <a href="home">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <ul class="links">
-            <li class="hidden-mobile"><a href="addOffer">Dodaj ogłoszenie</a></li>
+            <li class="hidden-mobile"><a href="add-offer">Dodaj ogłoszenie</a></li>
             <li class="hidden-mobile"><a href="categories">
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
@@ -30,7 +30,7 @@
         </ul>
         <div id="mobile-menu">
             <ul class="links">
-                <li><a href="addOffer">Dodaj ogłoszenie</a></li>
+                <li><a href="add-offer">Dodaj ogłoszenie</a></li>
                 <li class="dropdown"><a href="categories">
                     Kategorie
                     <img src="../assets/images/dropdown.svg" alt="dropdown">
@@ -42,7 +42,37 @@
     <main>
         <div class="wrapper">
             <h2>Najnowsze oferty - Kraków</h2>
-            <div id="offers">
+            <div id="offers-container">
+                <a href="" class="offer">
+                    <img src="../assets/images/offer.png" alt="offer">
+                    <div class="offer-info">
+                        <div class="top">
+                            <h3>Oferta 2</h3>
+                            <p class="location">Basztowa, Kraków</p>
+                        </div>
+                        <p class="price">100 zł</p>
+                    </div>
+                </a>
+                <a href="" class="offer">
+                    <img src="../assets/images/offer.png" alt="offer">
+                    <div class="offer-info">
+                        <div class="top">
+                            <h3>Oferta 2</h3>
+                            <p class="location">Basztowa, Kraków</p>
+                        </div>
+                        <p class="price">100 zł</p>
+                    </div>
+                </a>
+                <a href="" class="offer">
+                    <img src="../assets/images/offer.png" alt="offer">
+                    <div class="offer-info">
+                        <div class="top">
+                            <h3>Oferta 2</h3>
+                            <p class="location">Basztowa, Kraków</p>
+                        </div>
+                        <p class="price">100 zł</p>
+                    </div>
+                </a>
                 <a href="" class="offer">
                     <img src="../assets/images/offer.png" alt="offer">
                     <div class="offer-info">

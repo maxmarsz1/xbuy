@@ -19,18 +19,32 @@ class Routing {
     }
 
     public static function run($url) {
-        $action = explode('/', $url)[0];
-        if ($action == "" || $action == "home"){
+        $segments = explode('/', $url);
+        $action = $segments[0];
+
+        if ($action == "" || $action == "home") {
             $action = 'offers';
         }
 
         if (!array_key_exists($action, self::$routes)) {
-            die('404');
+            die('404 - Page not found');
         }
 
         $controller = self::$routes[$action];
         $object = new $controller();
-        $object->$action();
+        if (method_exists($object, $action)) {
+            $object->$action();
+        } else {
+            $method = self::normalizeMethodName($action);
+            if (method_exists($object, $method)) {
+                $object->$method();
+            } else {
+                die('404 - Method not found');
+            }
+        }
     }
 
+    private static function normalizeMethodName($method) {
+        return lcfirst(str_replace(' ', '', ucwords(str_replace('-', ' ', $method))));
+    }
 }

@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body id="add-offer">
+<body id="account">
     <header>
         <a href="home">
             <img src="../assets/images/logo.svg" alt="logo">
@@ -30,7 +30,7 @@
         </ul>
         <div id="mobile-menu">
             <ul class="links">
-                <li><a href="ad-offer">Dodaj ogłoszenie</a></li>
+                <li><a href="add-offer">Dodaj ogłoszenie</a></li>
                 <li class="dropdown"><a href="categories">
                     Kategorie
                     <img src="../assets/images/dropdown.svg" alt="dropdown">
@@ -41,37 +41,25 @@
     </header>
     <main>
         <div class="wrapper">
-            <h2>Nowa oferta</h2>
-
-            <form action="addOffer" method="post" enctype="multipart/form-data">
-                <label for="title">
-                    Tytuł oferty:
-                    <input type="text" name="title" required>
-                </label>
-                <label for="description">
-                    Opis oferty:
-                    <textarea name="description" required></textarea>
-                </label>
-                <label for="location">
-                    Lokalizacja:
-                    <input type="text" name="location"  required>
-                </label>
-                <label for="price">
-                    Cena:
-                    <span class="price">
-                        <input type="number" name="price" required>
-                    </span>
-                </label>
-                <label for="image">
-                    Zdjecie:
-                    <span class="image">
-                        <input type="file" name="image" accept="image/*" required>
-                        <div class="image-btn">Wybierz zdjecie</div>
-                    </span>
-                </label>
-
-                <input type="submit" value="Dodaj ofertę">
-            </form>
+            <h2>Twoje konto</h2>
+            <div id="account-blocks">
+                <a href="profile" class="account-block">
+                    <img src="../assets/images/profile.svg" alt="profile">
+                    <h3>Profil</h3>
+                </a>
+                <a href="my-products" class="account-block">
+                    <img src="../assets/images/box.svg" alt="box">
+                    <h3>Moje produkty</h3>
+                </a>
+                <a href="" class="account-block">
+                    <img src="../assets/images/settings.svg" alt="settings">
+                    <h3>Ustawienia</h3>
+                </a>
+                <a href="logout" class="account-block">
+                    <img src="../assets/images/logout.svg" alt="logout">
+                    <h3>Wyloguj</h3>
+                </a>
+            </div>
         </div>
     </main>
     <footer>

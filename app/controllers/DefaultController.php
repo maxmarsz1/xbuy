@@ -16,8 +16,11 @@ class DefaultController extends AppController {
     }
 
     public function addOffer() {
-        $this->render('addOffer');
+        $this->render('add-offer');
     }
 
+    public function account() {
+        $this->render('account');
+    }
 
 }

@@ -24,9 +24,6 @@ form input:not([type="submit"], [type="checkbox"], [type="radio"], [type="file"]
     border: 1px solid black;
     background-color: transparent;
 }
-form input[type="text"]:focus, form input[type="password"]:focus{
-    /* outline: none; */
-}
 form input[type="submit"]{
     padding: .6rem 4rem;
     font-size: 1.1rem;
@@ -220,14 +217,14 @@ main{
     max-width: 1200px;
     padding: 2rem;
 }
-#offers{
+#offers-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1rem;
 }
-#offers .offer{
+#offers-container .offer{
     display: flex;
     width: calc(50% - .5rem);
     flex-direction: row;
@@ -236,7 +233,7 @@ main{
     border-radius: 10px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
-#offers .offer .offer-info{
+#offers-container .offer .offer-info{
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -244,11 +241,11 @@ main{
     width: 100%;
     height: 100%;
 }
-#offers .offer img{
+#offers-container .offer img{
     max-width: 150px;
     max-height: 100%;
 }
-#offers .offer .offer-info h3{
+#offers-container .offer .offer-info h3{
     font-weight: 500;
     -webkit-line-clamp: 1;
     display: -webkit-box;
@@ -256,15 +253,15 @@ main{
     overflow: hidden;
     text-overflow: ellipsis;
 }
-#offers > a{
+#offers-container > a{
     text-decoration: none;
 }
-#offers .offer .offer-info .location{
+#offers-container .offer .offer-info .location{
     font-weight: 500;
     font-size: .8rem;
     color: var(--main-color);
 }
-#offers .offer .offer-info .price{
+#offers-container .offer .offer-info .price{
     align-self: flex-end;
 }
 .pagination{
@@ -279,6 +276,7 @@ footer{
     justify-content: space-between;
     margin-top: 2rem;
     padding: 3rem;
+    background-color: var(--main-color);
 }
 .right{
     display: flex;
@@ -309,11 +307,13 @@ footer h3{
     flex-direction: column;
     gap: 5px;
     width: 400px;
+    max-width: 100%;
 }
 #add-offer form textarea{
     width: 100% !important;
     min-height: 5rem;
     resize: vertical;
+    padding: .7rem 1rem;
     border-radius: 30px 30px 0 30px;
 }
 #add-offer form input[type="submit"]{
@@ -323,9 +323,80 @@ footer h3{
 #add-offer form input[type="submit"]:hover{
     background-color: var(--secondary-color);
 }
-
+#add-offer form input[type="number"]{
+    -moz-appearance: textfield;
+    max-width: 100px;
+}
+#add-offer form .price{
+    position: relative;
+    width: min-content;
+}
+#add-offer form .price::after{
+    content: "zł";
+    pointer-events: none;
+    position: absolute;
+    right: 20px;
+    top: 53%;
+    transform: translateY(-50%);
+    color: var(--main-color)
+}
+#add-offer form input[type="number"]::-webkit-inner-spin-button,
+#add-offer form input[type="number"]::-webkit-outer-spin-button{
+    -webkit-appearance: none;
+    margin: 0;
+}
+#add-offer form input[type="file"]{
+    display: none;
+}
+#add-offer form .image{
+    position: relative;
+}
+#add-offer form .image .image-btn{
+    border: 1px dashed black;
+    width: fit-content;
+    background-color: white;
+    padding: .4rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: .3s all ease;
+}
+#add-offer form .image .image-btn:hover{
+    background-color: var(--main-color);
+}
+#account-blocks{
+    margin-top: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+}
+#account-blocks .account-block{
+    width: calc(50% - 6rem);
+    margin: 1.3rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem 1rem;
+    background-color: var(--main-color);
+    border-radius: 50px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+    transition: .3s all ease;
+}
+#account-blocks .account-block:hover{
+    background-color: var(--secondary-color);
+}
+#account-blocks .account-block h3{
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: white;
+}
+#account-blocks .account-block img{
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
 @media (max-width: 991px){
-    #offers .offer{
+    #offers-container .offer{
         width: 100%;
     }
     footer .logo{
@@ -337,6 +408,10 @@ footer h3{
     }
     footer .links-wrapper.contact{
         margin-top: 1rem;
+    }
+    #account-blocks .account-block{
+        width: calc(50% - 2.6rem);
+        margin: 1.3rem;
     }
 }
 @media (max-width: 768px){
@@ -363,8 +438,12 @@ footer h3{
         margin-top: 8rem;
         align-items: center;
     }
-    #offers .offer .offer-info h3{
+    #offers-container .offer .offer-info h3{
         -webkit-line-clamp: 2;
+    }
+    #account-blocks .account-block{
+        width: 100%;
+        margin: 1.3rem 0;
     }
 }
 @media (min-width: 769px){

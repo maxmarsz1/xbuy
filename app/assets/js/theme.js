@@ -28,4 +28,17 @@ document.addEventListener('DOMContentLoaded', () => {
         activeElement.classList.remove('active');
         dimmed.style.display = 'none';
     })
+
+    const imageInput = document.querySelector('.image input[type="file"]');
+    const imageBtn = document.querySelector('.image .image-btn');
+    if(imageInput && imageBtn){
+        imageBtn.addEventListener('click', () => {
+            imageInput.click();
+        })
+        imageInput.addEventListener('change', () => {
+            const fileName = imageInput.files[0].name;
+            imageBtn.innerText = fileName;
+        })
+    }
+    
 })

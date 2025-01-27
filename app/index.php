@@ -8,5 +8,6 @@ Routing::get('offers', 'DefaultController');
 Routing::get('login', 'DefaultController');
 Routing::post('login', 'SecurityController');
 Routing::get('register', 'DefaultController');
-Routing::get('addOffer', 'DefaultController');
+Routing::get('add-offer', 'DefaultController');
+Routing::get('account', 'DefaultController');
 Routing::run($path);
