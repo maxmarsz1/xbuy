@@ -37,7 +37,7 @@ class OfferControler extends AppController {
 
             return $this->render('offers', [
                 'offers' => $this->repository->getOffers(),
-                'messages' => $this->message]);
+                'messages' => $this->message], '/offers');
         }
     }
 
@@ -49,8 +49,7 @@ class OfferControler extends AppController {
     public function removeOffer(int $id) {
         $this->repository->removeOffer($id);
         $this->message[] = "Oferta została usunięta pomyślnie";
-        // return $this->render('offers', ['offers' => $this->repository->getOffers(), 'messages' => $this->message]);
-        header('Location: /offers');
+        return $this->render('offers', ['offers' => $this->repository->getOffers(), 'messages' => $this->message], '/offers');
         exit;
     }
 
@@ -73,7 +72,7 @@ class OfferControler extends AppController {
             $this->message[] = "Oferta została edytowana pomyślnie";
             return $this->render('offers', [
                 'offers' => $this->repository->getOffers(),
-                'messages' => $this->message]);
+                'messages' => $this->message], '/offers');
         }
         $offer = $this->repository->getOffer($id);
         return $this->render('edit-offer', ['offer' => $offer]);

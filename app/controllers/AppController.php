@@ -8,10 +8,15 @@ class AppController{
     protected function isGet(): bool {
         return $_SERVER['REQUEST_METHOD'] === 'GET';
     }
-    protected function render(string $template = null, array $variables = []){
+    protected function render(string $template = null, array $variables = [], string $redirectUrl = null){
+        if ($redirectUrl) {
+            header('Location: ' . $redirectUrl);
+            exit;
+        }
+    
         $templatePath = __DIR__ . '/../templates/' . $template . '.php';
         $output = "File not found";
-
+    
         if(file_exists($templatePath)){
             extract($variables);
             ob_start();
