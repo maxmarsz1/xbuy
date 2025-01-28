@@ -10,7 +10,7 @@ CREATE TABLE users (
 
 CREATE TABLE offers (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
+    title VARCHAR(255) NOT NULL,
     location VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2),
@@ -18,18 +18,20 @@ CREATE TABLE offers (
     user_id INT NOT NULL REFERENCES users(id)
 );
 
--- Insert sample data into the 'users' table
 INSERT INTO users (username, password, first_name, last_name, role) VALUES
 ('john_doe', 'password123', 'John', 'Doe', 'admin'),
 ('jane_smith', 'password456', 'Jane', 'Smith', 'user'),
 ('alice_wong', 'password789', 'Alice', 'Wong', 'user'),
 ('bob_jones', 'password101', 'Bob', 'Jones', 'user');
 
--- Insert sample data into the 'offers' table
--- Ensure the user_id matches the id of an existing user in the 'users' table
-INSERT INTO offers (name, location, description, price, user_id) VALUES
-('Summer Vacation Package', 'Hawaii', 'Enjoy a 7-day vacation in Hawaii with flights and hotel included.', 1500.00, 1),
-('Winter Ski Trip', 'Switzerland', '5-day ski trip in the Swiss Alps, including equipment rental.', 2000.00, 2),
-('City Break in Paris', 'Paris', '3-day city break in Paris with guided tours and meals.', 1200.00, 3),
-('Beach Resort Stay', 'Maldives', 'Relax at a luxury beach resort with all-inclusive amenities.', 2500.00, 4),
-('Mountain Hiking Adventure', 'Colorado', '7-day hiking adventure in the Rocky Mountains.', 1800.00, 1);
+INSERT INTO offers (title, location, description, price, user_id) VALUES
+('Smartphone X200', 'New York', 'Latest model with 128GB storage, 5G support, and 48MP camera.', 799.99, 1),
+('Wireless Noise-Canceling Headphones', 'California', 'Premium over-ear headphones with 30-hour battery life.', 299.99, 2),
+('4K Ultra HD Smart TV', 'Texas', '55-inch 4K UHD Smart TV with HDR and built-in streaming apps.', 899.99, 3),
+('Laptop Pro 15', 'Washington', 'Powerful 15-inch laptop with 16GB RAM and 512GB SSD.', 1299.99, 4),
+('Designer Leather Jacket', 'Italy', 'High-quality leather jacket available in black and brown.', 499.99, 1),
+('Smart Home Security Camera', 'California', '1080p HD security camera with motion detection and night vision.', 149.99, 2),
+('Electric Stand Mixer', 'Germany', '1500W stand mixer with 5-speed settings and 3 attachments.', 399.99, 3),
+('Gaming Console X', 'Japan', 'Next-gen gaming console with 1TB storage and 4K gaming support.', 499.99, 4),
+('Yoga Mat with Carrying Strap', 'India', 'Eco-friendly yoga mat with non-slip surface and carrying strap.', 49.99, 1),
+('Bluetooth Portable Speaker', 'China', 'Waterproof Bluetooth speaker with 20-hour playtime.', 79.99, 2);

@@ -13,8 +13,12 @@ class OfferControler extends AppController {
     private $message = [];
 
     public function __construct() {
-        parent::__construct();
+        // parent::__construct();
         $this->repository = new OfferRepository();
+    }
+
+    public function __destruct() {
+        $this->repository->closeConnection();
     }
 
     public function addOffer()
@@ -30,6 +34,11 @@ class OfferControler extends AppController {
             $this->message[] = "Oferta została dodana pomyślnie";
             return $this->render('offers', ['messages' => $this->message]);
         }
+    }
+
+    public function offers() {
+        $offers = $this->repository->getOffers();
+        return $this->render('offers', ['offers' => $offers, 'messages' => $this->message]);
     }
 
     private function validate(array $file): bool

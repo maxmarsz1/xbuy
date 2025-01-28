@@ -29,6 +29,17 @@ class OfferRepository extends Repository
             $offer['image']
         );
     }
+
+    public function getOffers(): array
+    {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.offers
+        ');
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);    
+    }
+
     public function addOffer(Offer $offer): void
     {
         $date = new DateTime();

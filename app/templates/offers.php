@@ -50,66 +50,20 @@
             ?>
             <h2>Najnowsze oferty - Kraków</h2>
             <div id="offers-container">
-                <a href="" class="offer">
-                    <img src="../assets/images/offer.png" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>Oferta 2</h3>
-                            <p class="location">Basztowa, Kraków</p>
+                <?php
+                foreach ($offers as $offer) {
+                    echo '<a href="offer/'.$offer['id'].'" class="offer">
+                        <img src="../assets/images/offer.png" alt="offer">
+                        <div class="offer-info">
+                            <div class="top">
+                                <h3>'.$offer['title'].'</h3>
+                                <p class="location">'.$offer['location'].'</p>
+                            </div>
+                            <p class="price">'.$offer['price'].' zł</p>
                         </div>
-                        <p class="price">100 zł</p>
-                    </div>
-                </a>
-                <a href="" class="offer">
-                    <img src="../assets/images/offer.png" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>Oferta 2</h3>
-                            <p class="location">Basztowa, Kraków</p>
-                        </div>
-                        <p class="price">100 zł</p>
-                    </div>
-                </a>
-                <a href="" class="offer">
-                    <img src="../assets/images/offer.png" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>Oferta 2</h3>
-                            <p class="location">Basztowa, Kraków</p>
-                        </div>
-                        <p class="price">100 zł</p>
-                    </div>
-                </a>
-                <a href="" class="offer">
-                    <img src="../assets/images/offer.png" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>Oferta 2</h3>
-                            <p class="location">Basztowa, Kraków</p>
-                        </div>
-                        <p class="price">100 zł</p>
-                    </div>
-                </a>
-                <a href="" class="offer">
-                    <img src="../assets/images/offer.png" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>Oferta 2</h3>
-                            <p class="location">Basztowa, Kraków</p>
-                        </div>
-                        <p class="price">100 zł</p>
-                    </div>
-                </a>
-                <a href="" class="offer">
-                    <img src="../assets/images/offer.png" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>Oferta 2</h3>
-                            <p class="location">Basztowa, Kraków</p>
-                        </div>
-                        <p class="price">100 zł</p>
-                    </div>
-                </a>
+                    </a>';
+                }
+                ?>
             </div>
             <div class="pagination">
                 <a href="" class="active">1</a>
