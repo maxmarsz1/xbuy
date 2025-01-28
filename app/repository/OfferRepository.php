@@ -11,14 +11,12 @@ class OfferRepository extends Repository
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.offers WHERE id = :id
         ');
-        $stmt->bindParam(':username', $username, PDO::PARAM_INT);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-
         $offer = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if ($user == false) {
-            return null;
-        }
+        // if ($user == false) {
+        //     return null;
+        // }
 
         return new Offer(
             $offer['title'],
@@ -26,7 +24,9 @@ class OfferRepository extends Repository
             $offer['location'],
             $offer['price'],
             $offer['user_id'],
-            $offer['image']
+            $offer['image'],
+            $offer['created_date'],
+            $offer['id']
         );
     }
 
@@ -40,15 +40,15 @@ class OfferRepository extends Repository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);    
     }
 
-    public function addOffer(Offer $offer): void
+    public function addOffer(Offer $offer): int
     {
         $date = new DateTime();
-        $stmt = $this->database->connect()->prepare('
+        $pdo = $this->database->connect();
+        $stmt = $pdo->prepare('
             INSERT INTO offers (title, description, location, price, image, created_date, user_id)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ');
 
-        //TODO you should get this value from logged user session
         $assignedById = 1;
 
         $stmt->execute([
@@ -60,5 +60,31 @@ class OfferRepository extends Repository
             $date->format('Y-m-d H:i:s'),
             $assignedById
         ]);
+
+        return $pdo->lastInsertId();
+    }
+
+    public function removeOffer(int $id) {
+        $stmt = $this->database->connect()->prepare('
+            DELETE FROM public.offers WHERE id = :id
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    public function editOffer(int $id, string $title, string $description, string $location, float $price, string $image): int{
+        $stmt = $this->database->connect()->prepare('
+            UPDATE public.offers SET title = :title, description = :description, location = :location, price = :price, image = :image WHERE id = :id
+        ');
+
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->bindParam(':title', $title);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':location', $location);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':image', $image);
+        $stmt->execute();
+
+        return $id;
     }
 }

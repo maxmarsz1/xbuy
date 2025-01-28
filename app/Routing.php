@@ -22,9 +22,13 @@ class Routing {
     public static function run($url) {
         $segments = explode('/', $url);
         $action = $segments[0];
-
+        $parameters = array_slice($segments, 1);
         if ($action == "" || $action == "index") {
             $action = 'offers';
+        }
+        if ($action === 'remove-offer' && $_SERVER['REQUEST_METHOD'] === 'GET') {
+            header("Location: /offers");
+            exit();
         }
 
         if (!array_key_exists($action, self::$routes)) {
@@ -33,12 +37,13 @@ class Routing {
 
         $controller = self::$routes[$action];
         $object = new $controller();
+        
         if (method_exists($object, $action)) {
-            $object->$action();
+            $object->$action(...$parameters);
         } else {
             $method = self::normalizeMethodName($action);
             if (method_exists($object, $method)) {
-                $object->$method();
+                $object->$method(...$parameters);
             } else {
                 die('404 - Method not found');
             }

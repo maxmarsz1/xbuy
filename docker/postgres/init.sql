@@ -14,6 +14,7 @@ CREATE TABLE offers (
     location VARCHAR(255) NOT NULL,
     description TEXT,
     price DECIMAL(10, 2),
+    image VARCHAR(255),
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     user_id INT NOT NULL REFERENCES users(id)
 );

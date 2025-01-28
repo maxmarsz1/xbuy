@@ -18,7 +18,7 @@ body{
     font-family: 'Poppins', sans-serif;
 }
 form input:not([type="submit"], [type="checkbox"], [type="radio"], [type="file"]), form textarea{
-    padding: .4rem 1.3rem;
+    padding: .4rem 1rem;
     font-size: 1.1rem;
     border-radius: 50px;
     border: 1px solid black;
@@ -294,7 +294,7 @@ footer .links-wrapper{
 footer h3{
     margin-bottom: 1rem;
 }
-#add-offer form{
+form.offer{
     width: 100%;
     margin-top: 2rem;
     display: flex;
@@ -302,36 +302,38 @@ footer h3{
     align-items: center;
     gap: 1rem;
 }
-#add-offer form label{
+form.offer label{
     display: flex;
     flex-direction: column;
     gap: 5px;
     width: 400px;
     max-width: 100%;
 }
-#add-offer form textarea{
+form.offer textarea{
     width: 100% !important;
     min-height: 5rem;
     resize: vertical;
     padding: .7rem 1rem;
     border-radius: 30px 30px 0 30px;
 }
-#add-offer form input[type="submit"]{
+form.offer input[type="submit"]{
     margin-top: 1rem;
     transition: .1s all ease-in-out;
 }
-#add-offer form input[type="submit"]:hover{
+form.offer input[type="submit"]:hover{
     background-color: var(--secondary-color);
 }
-#add-offer form input[type="number"]{
+form.offer input[type="number"]{
     -moz-appearance: textfield;
-    max-width: 100px;
+    max-width: 150px;
+    padding-right: 2.1rem;
+    text-align: right;
 }
-#add-offer form .price{
+form.offer .price{
     position: relative;
     width: min-content;
 }
-#add-offer form .price::after{
+form.offer .price::after{
     content: "zł";
     pointer-events: none;
     position: absolute;
@@ -340,18 +342,18 @@ footer h3{
     transform: translateY(-50%);
     color: var(--main-color)
 }
-#add-offer form input[type="number"]::-webkit-inner-spin-button,
-#add-offer form input[type="number"]::-webkit-outer-spin-button{
+form.offer input[type="number"]::-webkit-inner-spin-button,
+form.offer input[type="number"]::-webkit-outer-spin-button{
     -webkit-appearance: none;
     margin: 0;
 }
-#add-offer form input[type="file"]{
+form.offer input[type="file"]{
     display: none;
 }
-#add-offer form .image{
+form.offer .image{
     position: relative;
 }
-#add-offer form .image .image-btn{
+form.offer .image .image-btn{
     border: 1px dashed black;
     width: fit-content;
     background-color: white;
@@ -360,7 +362,7 @@ footer h3{
     cursor: pointer;
     transition: .3s all ease;
 }
-#add-offer form .image .image-btn:hover{
+form.offer .image .image-btn:hover{
     background-color: var(--main-color);
 }
 #account-blocks{

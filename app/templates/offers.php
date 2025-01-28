@@ -11,16 +11,16 @@
 </head>
 <body id="offers">
     <header>
-        <a href="index">
+        <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <ul class="links">
-            <li class="hidden-mobile"><a href="add-offer">Dodaj ogłoszenie</a></li>
-            <li class="hidden-mobile"><a href="categories">
+            <li class="hidden-mobile"><a href="/add-offer">Dodaj ogłoszenie</a></li>
+            <li class="hidden-mobile"><a href="/categories">
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
-            <li class="hidden-mobile"><a href="account">Konto</a></li>
+            <li class="hidden-mobile"><a href="/account">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -30,12 +30,12 @@
         </ul>
         <div id="mobile-menu">
             <ul class="links">
-                <li><a href="add-offer">Dodaj ogłoszenie</a></li>
-                <li class="dropdown"><a href="categories">
+                <li><a href="/add-offer">Dodaj ogłoszenie</a></li>
+                <li class="dropdown"><a href="/categories">
                     Kategorie
                     <img src="../assets/images/dropdown.svg" alt="dropdown">
                 </a></li>
-                <li><a href="account">Konto</a></li>
+                <li><a href="/account">Konto</a></li>
             </ul>
         </div>
     </header>
@@ -50,20 +50,20 @@
             ?>
             <h2>Najnowsze oferty - Kraków</h2>
             <div id="offers-container">
-                <?php
-                foreach ($offers as $offer) {
-                    echo '<a href="offer/'.$offer['id'].'" class="offer">
-                        <img src="../assets/images/offer.png" alt="offer">
-                        <div class="offer-info">
-                            <div class="top">
-                                <h3>'.$offer['title'].'</h3>
-                                <p class="location">'.$offer['location'].'</p>
-                            </div>
-                            <p class="price">'.$offer['price'].' zł</p>
+            <?php
+            foreach ($offers as $offer) {
+                echo '<a href="offer/'.$offer['id'].'" class="offer">
+                    <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" alt="offer">
+                    <div class="offer-info">
+                        <div class="top">
+                            <h3>'.$offer['title'].'</h3>
+                            <p class="location">'.$offer['location'].'</p>
                         </div>
-                    </a>';
-                }
-                ?>
+                        <p class="price">'.$offer['price'].' zł</p>
+                    </div>
+                </a>';
+            }
+            ?>
             </div>
             <div class="pagination">
                 <a href="" class="active">1</a>

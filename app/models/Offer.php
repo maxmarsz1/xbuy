@@ -1,6 +1,7 @@
 <?php
 
 class Offer{
+    private $id;
     private $title;
     private $description;
     private $location;
@@ -9,16 +10,25 @@ class Offer{
     private $createdDate;
     private $userId;
 
-    public function __construct($title, $description, $location, $price, $userId, $image){
+    public function __construct($title, $description, $location, $price, $userId, $image, $createdDate = null, $id = null){
+        $this->id = $id;
         $this->title = $title;
         $this->location = $location;
         $this->image = $image;
         $this->price = $price;
         $this->description = $description;
-        $this->createdDate = date('Y-m-d H:i:s');
+        if ($createdDate == null) {
+            $date = new DateTime();
+            $this->createdDate = $date->format('Y-m-d H:i:s');
+        } else {
+            $this->createdDate = $createdDate;
+        }
         $this->userId = $userId;
     }
 
+    public function getId(){
+        return $this->id;
+    }
     public function getTitle(){
         return $this->title;
     }
@@ -41,6 +51,9 @@ class Offer{
         return $this->userId;
     }
     
+    public function setId($id){
+        $this->id = $id;
+    }
     public function setTitle($title){
         $this->title = $title;
     }

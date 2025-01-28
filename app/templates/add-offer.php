@@ -10,17 +10,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body id="add-offer">
-    <header>
-        <a href="index">
+<header>
+        <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
         <ul class="links">
-            <li class="hidden-mobile"><a href="add-offer">Dodaj ogłoszenie</a></li>
-            <li class="hidden-mobile"><a href="categories">
+            <li class="hidden-mobile"><a href="/add-offer">Dodaj ogłoszenie</a></li>
+            <li class="hidden-mobile"><a href="/categories">
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
-            <li class="hidden-mobile"><a href="account">Konto</a></li>
+            <li class="hidden-mobile"><a href="/account">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -30,12 +30,12 @@
         </ul>
         <div id="mobile-menu">
             <ul class="links">
-                <li><a href="ad-offer">Dodaj ogłoszenie</a></li>
-                <li class="dropdown"><a href="categories">
+                <li><a href="/add-offer">Dodaj ogłoszenie</a></li>
+                <li class="dropdown"><a href="/categories">
                     Kategorie
                     <img src="../assets/images/dropdown.svg" alt="dropdown">
                 </a></li>
-                <li><a href="account">Konto</a></li>
+                <li><a href="/account">Konto</a></li>
             </ul>
         </div>
     </header>
@@ -43,7 +43,7 @@
         <div class="wrapper">
             <h2>Nowa oferta</h2>
 
-            <form action="add-offer" method="post" enctype="multipart/form-data">
+            <form class="offer" action="add-offer" method="post" enctype="multipart/form-data">
                 <label for="title">
                     Tytuł oferty:
                     <input type="text" name="title" required>
@@ -59,7 +59,7 @@
                 <label for="price">
                     Cena:
                     <span class="price">
-                        <input type="number" name="price" required>
+                        <input type="number" name="price" step="0.01" required>
                     </span>
                 </label>
                 <label for="image">

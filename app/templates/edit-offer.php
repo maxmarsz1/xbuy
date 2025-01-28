@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body id="account">
-<header>
+<body id="edit-offer">
+    <header>
         <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
@@ -41,25 +41,51 @@
     </header>
     <main>
         <div class="wrapper">
-            <h2>Twoje konto</h2>
-            <div id="account-blocks">
-                <a href="profile" class="account-block">
-                    <img src="../assets/images/profile.svg" alt="profile">
-                    <h3>Profil</h3>
-                </a>
-                <a href="my-products" class="account-block">
-                    <img src="../assets/images/box.svg" alt="box">
-                    <h3>Moje produkty</h3>
-                </a>
-                <a href="" class="account-block">
-                    <img src="../assets/images/settings.svg" alt="settings">
-                    <h3>Ustawienia</h3>
-                </a>
-                <a href="logout" class="account-block">
-                    <img src="../assets/images/logout.svg" alt="logout">
-                    <h3>Wyloguj</h3>
-                </a>
-            </div>
+            <?php
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo '<p class="message">' . $message . '</p>';
+                    }
+                }
+            ?>
+            <h2>Edytuj ofertę</h2>
+            <form class="offer" action="/edit-offer/<?=$offer->getId()?>" method="post" enctype="multipart/form-data">
+                <label for="title">
+                    Tytuł oferty:
+                    <input type="text" name="title" value="<?=$offer->getTitle()?>" required>
+                </label>
+                <label for="description">
+                    Opis oferty:
+                    <textarea name="description" required><?=$offer->getDescription()?></textarea>
+                </label>
+                <label for="location">
+                    Lokalizacja:
+                    <input type="text" name="location" value="<?=$offer->getLocation()?>"  required>
+                </label>
+                <label for="price">
+                    Cena:
+                    <span class="price">
+                        <input type="number" name="price" step="0.01" value="<?=$offer->getPrice()?>" required>
+                    </span>
+                </label>
+                <label for="image">
+                    Zdjecie:
+                    <span class="image">
+                        <input type="file" name="file" accept="image/*">
+                        <div class="image-btn">
+                            <?php 
+                            if($offer->getImage()) {
+                                echo $offer->getImage();
+                            } else {
+                                echo "Wybierz zdjecie";
+                            }
+                            ?>
+                        </div>
+                    </span>
+                </label>
+
+                <input type="submit" value="Zapisz ofertę">
+            </form>
         </div>
     </main>
     <footer>
