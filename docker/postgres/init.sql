@@ -20,10 +20,11 @@ CREATE TABLE offers (
 );
 
 INSERT INTO users (username, password, first_name, last_name, role) VALUES
-('john_doe', 'password123', 'John', 'Doe', 'admin'),
-('jane_smith', 'password456', 'Jane', 'Smith', 'user'),
-('alice_wong', 'password789', 'Alice', 'Wong', 'user'),
-('bob_jones', 'password101', 'Bob', 'Jones', 'user');
+('admin', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Admin', 'User', 'admin'),
+('john_doe', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'John', 'Doe', 'admin'),
+('jane_smith', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Jane', 'Smith', 'user'),
+('alice_wong', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Alice', 'Wong', 'user'),
+('bob_jones', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Bob', 'Jones', 'user');
 
 INSERT INTO offers (title, location, description, price, user_id) VALUES
 ('Smartphone X200', 'New York', 'Latest model with 128GB storage, 5G support, and 48MP camera.', 799.99, 1),

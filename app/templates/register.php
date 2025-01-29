@@ -31,10 +31,17 @@
         <div id="right-column">
             <div class="wrapper">
                 <h2>Rejestracja</h2>
-                <form action="post">
+                <form action="register" method="post">
                     <input type="text" name="username" placeholder="nazwa użytkownika" id="">
                     <input type="password" name="password" placeholder="hasło" id="">
-                    <input type="password" name="password" placeholder="powtórz hasło" id="">
+                    <input type="password" name="password1" placeholder="powtórz hasło" id="">
+                    <?php
+                    if (isset($messages)) {
+                        foreach ($messages as $message) {
+                            echo '<p class="error">' . $message . '</p>';
+                        }
+                    }
+                    ?>
                     <input type="submit" value="Zarejestruj się">
                 </form>
                 <div class="no-account">Jeśli masz już konto, <a href="login">zaloguj się</a></div>

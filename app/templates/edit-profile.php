@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body id="account">
-<header>
+<body id="edit-profile">
+    <header>
         <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
@@ -20,7 +20,7 @@
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
-            <li class="hidden-mobile"><a href="/account">Konto</a></li>
+            <li class="hidden-mobile"><a href="/profile">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -35,31 +35,35 @@
                     Kategorie
                     <img src="../assets/images/dropdown.svg" alt="dropdown">
                 </a></li>
-                <li><a href="/account">Konto</a></li>
+                <li><a href="/profile">Konto</a></li>
             </ul>
         </div>
     </header>
     <main>
         <div class="wrapper">
-            <h2>Twoje konto</h2>
-            <div id="account-blocks">
-                <a href="profile" class="account-block">
-                    <img src="../assets/images/profile.svg" alt="profile">
-                    <h3>Profil</h3>
-                </a>
-                <a href="my-products" class="account-block">
-                    <img src="../assets/images/box.svg" alt="box">
-                    <h3>Moje produkty</h3>
-                </a>
-                <a href="" class="account-block">
-                    <img src="../assets/images/settings.svg" alt="settings">
-                    <h3>Ustawienia</h3>
-                </a>
-                <a href="logout" class="account-block">
-                    <img src="../assets/images/logout.svg" alt="logout">
-                    <h3>Wyloguj</h3>
-                </a>
-            </div>
+            <?php
+                $user = $_SESSION['user'];
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo '<p class="message">' . $message . '</p>';
+                    }
+                }
+            ?>
+            <h2>Edytuj profil</h2>
+            <form class="profile" action="/edit-profile" method="post" enctype="multipart/form-data">
+                <label for="firstName">
+                    Imię:
+                    <input type="text" name="firstName" value="<?= $user->firstName ?>" required>
+                </label>
+                <label for="lastName">
+                    Nazwisko:
+                    <input type="text" name="lastName" value="<?= $user->lastName ?>"  required>
+                </label>
+                <div class="buttons">
+                    <input type="submit" value="Zapisz zmiany">
+                    <a href="/profile">Powrót</a>
+                </div>
+            </form>
         </div>
     </main>
     <footer>

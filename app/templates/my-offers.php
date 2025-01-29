@@ -20,14 +20,7 @@
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
-            <?php
-            session_start();
-            if (isset($_SESSION['user'])) {
-                echo '<li class="hidden-mobile"><a href="/profile">Konto</a></li>';
-            } else {
-                echo '<li class="hidden-mobile"><a href="/login">Zaloguj się</a></li>';
-            }
-            ?>
+            <li class="hidden-mobile"><a href="/profile">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -55,21 +48,37 @@
                 }
             }
             ?>
-            <h2>Najnowsze oferty</h2>
+            <h2>Moje oferty</h2>
             <div id="offers-container">
             <?php
-            foreach ($offers as $offer) {
-                echo '<a href="offer/'.$offer['id'].'" class="offer">
-                    <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>'.$offer['title'].'</h3>
-                            <p class="location">'.$offer['location'].'</p>
+            if(isset($offers) && count($offers) > 0) {
+                foreach ($offers as $offer) {
+                    echo '<div class="offer">
+                        <a href="offer/'.$offer['id'].'" class="offer-link">
+                            <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" alt="offer">
+                        </a>
+                        <div class="offer-info">
+                            <div class="top">
+                                <a href="offer/'.$offer['id'].'" class="offer-link">
+                                    <h3>'.$offer['title'].'</h3>
+                                </a>
+                                <p class="location">'.$offer['location'].'</p>
+                            </div>
+                            <div class="bottom">
+                                <div class="options">
+                                    <a href="edit-offer/'.$offer['id'].'"><img src="../assets/images/edit.svg" alt="edit"></a>
+                                    <a href="delete-offer/'.$offer['id'].'"><img src="../assets/images/delete.svg" alt="delete"></a>
+                                </div>
+                                <p class="price">'.$offer['price'].' zł</p>
+                            </div>
                         </div>
-                        <p class="price">'.$offer['price'].' zł</p>
                     </div>
-                </a>';
+                    ';
+                }
+            } else {
+                echo '<p>Brak ofert</p>';
             }
+            
             ?>
             </div>
             <!-- <div class="pagination">

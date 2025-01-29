@@ -20,7 +20,7 @@
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
-            <li class="hidden-mobile"><a href="/account">Konto</a></li>
+            <li class="hidden-mobile"><a href="/profile">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -35,7 +35,7 @@
                     Kategorie
                     <img src="../assets/images/dropdown.svg" alt="dropdown">
                 </a></li>
-                <li><a href="/account">Konto</a></li>
+                <li><a href="/profile">Konto</a></li>
             </ul>
         </div>
     </header>

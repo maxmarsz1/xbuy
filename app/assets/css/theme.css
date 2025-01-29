@@ -264,6 +264,29 @@ main{
 #offers-container .offer .offer-info .price{
     align-self: flex-end;
 }
+#offers-container .offer .offer-info .bottom{
+    align-self: flex-end;
+    display: flex;
+    justify-content: space-between;
+    width: 100%
+
+} 
+:is(#edit-offer, #edit-profile) form .buttons{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+:is(#edit-offer, #edit-profile) form .buttons a{
+    text-decoration: none;
+    padding: .5rem 4rem;
+    border-radius: 50px;
+    border: 1px solid black;
+    margin-top: 1rem;
+}
+:is(#edit-offer, #edit-profile) form .buttons a:hover{
+    text-decoration: underline;
+}
 .pagination{
     text-align: center;
     margin-top: 3rem;
@@ -294,7 +317,7 @@ footer .links-wrapper{
 footer h3{
     margin-bottom: 1rem;
 }
-form.offer{
+form:is(.offer, .profile){
     width: 100%;
     margin-top: 2rem;
     display: flex;
@@ -302,38 +325,38 @@ form.offer{
     align-items: center;
     gap: 1rem;
 }
-form.offer label{
+form:is(.offer, .profile) label{
     display: flex;
     flex-direction: column;
     gap: 5px;
     width: 400px;
     max-width: 100%;
 }
-form.offer textarea{
+form:is(.offer, .profile) textarea{
     width: 100% !important;
     min-height: 5rem;
     resize: vertical;
     padding: .7rem 1rem;
     border-radius: 30px 30px 0 30px;
 }
-form.offer input[type="submit"]{
+form:is(.offer, .profile) input[type="submit"]{
     margin-top: 1rem;
     transition: .1s all ease-in-out;
 }
-form.offer input[type="submit"]:hover{
+form:is(.offer, .profile) input[type="submit"]:hover{
     background-color: var(--secondary-color);
 }
-form.offer input[type="number"]{
+form:is(.offer, .profile) input[type="number"]{
     -moz-appearance: textfield;
     max-width: 150px;
-    padding-right: 2.1rem;
+    padding-right: 2.3rem;
     text-align: right;
 }
-form.offer .price{
+form:is(.offer, .profile) .price{
     position: relative;
     width: min-content;
 }
-form.offer .price::after{
+form:is(.offer, .profile) .price::after{
     content: "zł";
     pointer-events: none;
     position: absolute;
@@ -342,18 +365,18 @@ form.offer .price::after{
     transform: translateY(-50%);
     color: var(--main-color)
 }
-form.offer input[type="number"]::-webkit-inner-spin-button,
-form.offer input[type="number"]::-webkit-outer-spin-button{
+form:is(.offer, .profile) input[type="number"]::-webkit-inner-spin-button,
+form:is(.offer, .profile) input[type="number"]::-webkit-outer-spin-button{
     -webkit-appearance: none;
     margin: 0;
 }
-form.offer input[type="file"]{
+form:is(.offer, .profile) input[type="file"]{
     display: none;
 }
-form.offer .image{
+form:is(.offer, .profile) .image{
     position: relative;
 }
-form.offer .image .image-btn{
+form:is(.offer, .profile) .image .image-btn{
     border: 1px dashed black;
     width: fit-content;
     background-color: white;
@@ -362,7 +385,7 @@ form.offer .image .image-btn{
     cursor: pointer;
     transition: .3s all ease;
 }
-form.offer .image .image-btn:hover{
+form:is(.offer, .profile) .image .image-btn:hover{
     background-color: var(--main-color);
 }
 #account-blocks{

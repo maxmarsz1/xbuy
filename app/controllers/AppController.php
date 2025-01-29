@@ -8,6 +8,10 @@ class AppController{
     protected function isGet(): bool {
         return $_SERVER['REQUEST_METHOD'] === 'GET';
     }
+
+    protected function isAuthorized(): bool {
+        return isset($_SESSION['user']);
+    }
     protected function render(string $template = null, array $variables = [], string $redirectUrl = null){
         if ($redirectUrl) {
             header('Location: ' . $redirectUrl);

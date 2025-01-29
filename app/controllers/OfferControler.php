@@ -24,15 +24,16 @@ class OfferControler extends AppController {
             ]);
         }
         if (is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])) {
+            session_start();
             $image = $this->getImageName($_POST['title'], $_POST['description'], $_FILES['file']['name']);
 
             move_uploaded_file(
                 $_FILES['file']['tmp_name'], 
                 dirname(__DIR__).self::UPLOAD_DIRECTORY.$image
             );
-
+            $user_id = $_SESSION['user']->id;
             $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY.$image);
-            $id = $this->repository->addOffer($offer);
+            $id = $this->repository->addOffer($offer, $user_id);
             $this->message[] = "Oferta została dodana pomyślnie";
 
             return $this->render('offers', [
@@ -46,14 +47,23 @@ class OfferControler extends AppController {
         return $this->render('offers', ['offers' => $offers, 'messages' => $this->message]);
     }
 
-    public function removeOffer(int $id) {
+    public function myOffers(){
+        session_start();
+        $user_id = $_SESSION['user']->id;
+        $offers = $this->repository->getUserOffers($user_id);
+
+        return $this->render('my-offers', ['offers' => $offers, 'messages' => $this->message]);
+    }
+
+    public function deleteOffer(int $id) {
         $this->repository->removeOffer($id);
         $this->message[] = "Oferta została usunięta pomyślnie";
         return $this->render('offers', ['offers' => $this->repository->getOffers(), 'messages' => $this->message], '/offers');
         exit;
     }
 
-    public function editOffer(int $id) {
+    public function editOffer(string $id) {
+        $id = (int) $id;
         if($this->isPost()) {
             if(!isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) ) {
                 $this->message[] = "Wypełnij wszystkie pola";
@@ -74,7 +84,16 @@ class OfferControler extends AppController {
                 'offers' => $this->repository->getOffers(),
                 'messages' => $this->message], '/offers');
         }
+        session_start();
         $offer = $this->repository->getOffer($id);
+        // var_dump($offer);
+        // print_r($_SESSION);
+        if(!$offer || !isset($_SESSION['user']) || $offer->getUserId() != $_SESSION['user']->id) {
+            $this->message[] = "Oferta nie istnieje, lub nie masz dostępu do niej";
+            $offers = $this->repository->getOffers();
+            return $this->render('offers', ['offers' => $offers, 'messages' => $this->message], '/offers');
+        }
+        
         return $this->render('edit-offer', ['offer' => $offer]);
     }
 

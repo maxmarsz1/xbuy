@@ -5,13 +5,25 @@ $path = trim($_SERVER['REQUEST_URI'], '/');
 $path = parse_url ($path, PHP_URL_PATH);
 
 Routing::get('offers', 'OfferControler');
+
 Routing::get('login', 'DefaultController');
 Routing::post('login', 'SecurityController');
 Routing::get('register', 'DefaultController');
+Routing::post('register', 'SecurityController');
+Routing::get('logout', 'SecurityController');
+
+Routing::get('change-password', 'DefaultController');
+Routing::post('change-password', 'SecurityController');
+
 Routing::get('add-offer', 'DefaultController');
 Routing::post('add-offer', 'OfferControler');
 Routing::get('edit-offer', 'OfferControler');
 Routing::post('edit-offer', 'OfferControler');
-Routing::post('remove-offer', 'OfferControler');
-Routing::get('account', 'DefaultController');
+Routing::get('delete-offer', 'OfferControler');
+
+Routing::get('profile', 'DefaultController');
+Routing::get('my-offers', 'OfferControler');
+Routing::get('edit-profile', 'DefaultController');
+Routing::post('edit-profile', 'UserController');
+
 Routing::run($path);

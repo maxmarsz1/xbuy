@@ -14,9 +14,10 @@ class OfferRepository extends Repository
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $offer = $stmt->fetch(PDO::FETCH_ASSOC);
-        // if ($user == false) {
-        //     return null;
-        // }
+
+        if ($offer == false) {
+            return null;
+        }
 
         return new Offer(
             $offer['title'],
@@ -33,14 +34,24 @@ class OfferRepository extends Repository
     public function getOffers(): array
     {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.offers
+            SELECT * FROM public.offers order by created_date
         ');
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);    
     }
 
-    public function addOffer(Offer $offer): int
+    public function getUserOffers(int $userId): array{
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.offers WHERE user_id = :userId
+        ');
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function addOffer(Offer $offer, int $user_id): int
     {
         $date = new DateTime();
         $pdo = $this->database->connect();
@@ -49,7 +60,6 @@ class OfferRepository extends Repository
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ');
 
-        $assignedById = 1;
 
         $stmt->execute([
             $offer->getTitle(),
@@ -58,7 +68,7 @@ class OfferRepository extends Repository
             $offer->getPrice(),
             $offer->getImage(),
             $date->format('Y-m-d H:i:s'),
-            $assignedById
+            $user_id
         ]);
 
         return $pdo->lastInsertId();

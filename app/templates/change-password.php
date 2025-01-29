@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body id="offers">
+<body id="edit-profile">
     <header>
         <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
@@ -20,14 +20,7 @@
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
-            <?php
-            session_start();
-            if (isset($_SESSION['user'])) {
-                echo '<li class="hidden-mobile"><a href="/profile">Konto</a></li>';
-            } else {
-                echo '<li class="hidden-mobile"><a href="/login">Zaloguj się</a></li>';
-            }
-            ?>
+            <li class="hidden-mobile"><a href="/profile">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -49,34 +42,32 @@
     <main>
         <div class="wrapper">
             <?php
-            if (isset($messages)) {
-                foreach ($messages as $message) {
-                    echo '<p class="message">' . $message . '</p>';
+                $user = $_SESSION['user'];
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo '<p class="message">' . $message . '</p>';
+                    }
                 }
-            }
             ?>
-            <h2>Najnowsze oferty</h2>
-            <div id="offers-container">
-            <?php
-            foreach ($offers as $offer) {
-                echo '<a href="offer/'.$offer['id'].'" class="offer">
-                    <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" alt="offer">
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>'.$offer['title'].'</h3>
-                            <p class="location">'.$offer['location'].'</p>
-                        </div>
-                        <p class="price">'.$offer['price'].' zł</p>
-                    </div>
-                </a>';
-            }
-            ?>
-            </div>
-            <!-- <div class="pagination">
-                <a href="" class="active">1</a>
-                <a href="">2</a>
-                <a href="">3</a>
-            </div> -->
+            <h2>Zmień hasło</h2>
+            <form class="profile" action="/change-password" method="post" enctype="multipart/form-data">
+                <label for="oldPassword">
+                    Obecne hasło:
+                    <input type="password" name="oldPassword" required>
+                </label>
+                <label for="newPassword">
+                    Nowe hasło:
+                    <input type="password" name="newPassword" required>
+                </label>
+                <label for="newPassword1">
+                    Powtórz nowe hasło:
+                    <input type="password" name="newPassword1" required>
+                </label>
+                <div class="buttons">
+                    <input type="submit" value="Zmień hasło">
+                    <a href="/profile">Powrót</a>
+                </div>
+            </form>
         </div>
     </main>
     <footer>
