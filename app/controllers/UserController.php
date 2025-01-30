@@ -8,16 +8,18 @@ class UserController extends AppController {
     }
 
     public function editProfile() {
-        if ($this->isPost()) {
-            session_start();
-            $user_id = $_SESSION['user']->id;
-            $firstName = $_POST['firstName'];
-            $lastName = $_POST['lastName'];
-            $this->repository->updateUser($user_id, $firstName, $lastName);
-            $user = $this->repository->getUser($_SESSION['user']->username);
-            $_SESSION['user'] = $user;
-            $this->message[] = "Profil został zaktualizowany pomyślnie";
-            return $this->render('profile', ['user' => $_SESSION['user'], 'messages' => $this->message]);
-        }
+        session_start();
+        $user_id = $_SESSION['user']->id;
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $phoneNumber = $_POST['phoneNumber'];
+
+        $this->repository->updateUser($user_id, $firstName, $lastName, $phoneNumber);
+
+        $user = $this->repository->getUser($_SESSION['user']->username);
+        $_SESSION['user'] = $user;
+        $_SESSION['messages'][] = "Profil został zaktualizowany pomyślnie";
+
+        header('Location: /profile');
     }
 }

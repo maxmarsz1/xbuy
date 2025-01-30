@@ -241,9 +241,18 @@ main{
     width: 100%;
     height: 100%;
 }
-#offers-container .offer img{
+#offers-container .offer .offer-info .options img{
+    width: 20px;
+} 
+#offers-container .offer .offer-info .options{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+#offers-container .offer .offer-image{
     max-width: 150px;
-    max-height: 100%;
+    max-height: 100px;
+    object-fit: contain;
 }
 #offers-container .offer .offer-info h3{
     font-weight: 500;
@@ -430,6 +439,7 @@ form:is(.offer, .profile) .image .image-btn:hover{
 @media (max-width: 991px){
     #offers-container .offer{
         width: 100%;
+        min-height: 140px;
     }
     footer .logo{
         display: none;

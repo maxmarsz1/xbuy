@@ -1,8 +1,11 @@
 <?php
 
 require_once 'AppController.php';
+require_once __DIR__.'/../repository/OfferRepository.php';
+require_once __DIR__.'/../repository/UserRepository.php';
 
 class DefaultController extends AppController {
+
     public function login() {
         session_start();
         if($this->isAuthorized()) {
@@ -29,21 +32,23 @@ class DefaultController extends AppController {
             return $this->render('change-password');
         }
         else{
-            header('Location: login');
+            header('Location: /login');
         }
-    }
-
-    public function offers() {
-        $this->render('offers');
     }
 
     public function addOffer() {
         session_start();
-        if($this->isAuthorized()) {
-            return $this->render('add-offer');
+        $userRepository = new UserRepository();
+        if(!$this->isAuthorized()) {
+            header('Location: /login');
+        }
+        else if($userRepository->hasContactInfo($_SESSION['user']->id)) {
+            $this->render('add-offer');
         }
         else{
-            header('Location: login');
+            $offerRepository = new OfferRepository();
+            $_SESSION['messages'][] = "Aby dodać ofertę, musisz dodać dane kontaktowe";
+            header('Location: /offers');
         }
     }
 
@@ -53,7 +58,7 @@ class DefaultController extends AppController {
             return $this->render('profile');
         }
         else{
-            header('Location: login');
+            header('Location: /login');
         }
     }
 
@@ -63,7 +68,7 @@ class DefaultController extends AppController {
             return $this->render('edit-profile');
         }
         else{
-            header('Location: login');
+            header('Location: /login');
         }
     }
 

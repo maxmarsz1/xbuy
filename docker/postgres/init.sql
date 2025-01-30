@@ -5,6 +5,7 @@ CREATE TABLE users (
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     first_name VARCHAR(255),
     last_name VARCHAR(255),
+    phone_number VARCHAR(255),
     role VARCHAR(255)
 );
 
@@ -19,21 +20,70 @@ CREATE TABLE offers (
     user_id INT NOT NULL REFERENCES users(id)
 );
 
-INSERT INTO users (username, password, first_name, last_name, role) VALUES
-('admin', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Admin', 'User', 'admin'),
-('john_doe', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'John', 'Doe', 'admin'),
-('jane_smith', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Jane', 'Smith', 'user'),
-('alice_wong', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Alice', 'Wong', 'user'),
-('bob_jones', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Bob', 'Jones', 'user');
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    category_id INT REFERENCES categories(id)
+);
 
-INSERT INTO offers (title, location, description, price, user_id) VALUES
-('Smartphone X200', 'New York', 'Latest model with 128GB storage, 5G support, and 48MP camera.', 799.99, 1),
-('Wireless Noise-Canceling Headphones', 'California', 'Premium over-ear headphones with 30-hour battery life.', 299.99, 2),
-('4K Ultra HD Smart TV', 'Texas', '55-inch 4K UHD Smart TV with HDR and built-in streaming apps.', 899.99, 3),
-('Laptop Pro 15', 'Washington', 'Powerful 15-inch laptop with 16GB RAM and 512GB SSD.', 1299.99, 4),
-('Designer Leather Jacket', 'Italy', 'High-quality leather jacket available in black and brown.', 499.99, 1),
-('Smart Home Security Camera', 'California', '1080p HD security camera with motion detection and night vision.', 149.99, 2),
-('Electric Stand Mixer', 'Germany', '1500W stand mixer with 5-speed settings and 3 attachments.', 399.99, 3),
-('Gaming Console X', 'Japan', 'Next-gen gaming console with 1TB storage and 4K gaming support.', 499.99, 4),
-('Yoga Mat with Carrying Strap', 'India', 'Eco-friendly yoga mat with non-slip surface and carrying strap.', 49.99, 1),
-('Bluetooth Portable Speaker', 'China', 'Waterproof Bluetooth speaker with 20-hour playtime.', 79.99, 2);
+CREATE TABLE offers_categories (
+    offer_id INT NOT NULL REFERENCES offers(id),
+    category_id INT NOT NULL REFERENCES categories(id)
+);
+
+INSERT INTO categories (name, category_id) VALUES
+('Electronics', null),
+('Home & Garden', null),
+('Fashion', null),
+('Sport', null),
+('Food', null),
+('Laptops', 1),
+('Phones', 1),
+('Computers', 1),
+('Tablets', 1),
+('Furniture', 2),
+('Kitchen', 2),
+('Clothing', 3),
+('Shoes', 3),
+('Accessories', 3),
+('Bikes', 4),
+('Scooters', 4),
+('Skateboards', 4),
+('Dogs', 5),
+('Cats', 5),
+('Meat', 5),
+('Fish', 5),
+('Beverages', 5),
+('Fruits', 5),
+('Vegetables', 5),
+('Breads', 5);
+
+
+INSERT INTO users (username, password, first_name, last_name, role, phone_number) VALUES
+('admin', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Admin', 'User', 'admin', '123-456-7890'),
+('john_doe', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'John', 'Doe', 'admin', '234-567-8901'),
+('jane_smith', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Jane', 'Smith', 'user', '345-678-9012'),
+('alice_wong', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Alice', 'Wong', 'user', '456-789-0123'),
+('bob_jones', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Bob', 'Jones', 'user', '567-890-1234');
+
+
+INSERT INTO offers (title, location, description, price, image, user_id) VALUES
+('Laptop', 'Warsaw', 'It''s a laptop', 2000.00, 'laptop.jpg', 1),
+('Phone', 'Warsaw', 'It''s a phone', 1000.00, 'phone.jpg', 2),
+('Furniture', 'Warsaw', 'It''s a furniture', 500.00, 'furniture.jpg', 3),
+('Bike', 'Warsaw', 'It''s a bike', 1500.00, 'bike.jpg', 4),
+('Dog', 'Warsaw', 'It''s a dog', 100.00, 'dog.jpg', 5),
+('Fish', 'Warsaw', 'It''s a fish', 50.00, 'fish.jpg', 5),
+('Bread', 'Warsaw', 'It''s a bread', 10.00, 'bread.jpg', 5),
+('Apple', 'Warsaw', 'It''s an apple', 5.00, 'apple.jpg', 5);
+
+
+INSERT INTO offers_categories (offer_id, category_id) VALUES
+(1, 1),
+(2, 1),
+(3, 2),
+(4, 4),
+(5, 5),
+(6, 5),
+(7, 5),
+(8, 5);

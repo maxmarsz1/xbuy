@@ -9,8 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body id="profile">
-<header>
+<body id="dashboard">
+    <header>
         <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
@@ -20,7 +20,6 @@
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
-            <li class="hidden-mobile"><a href="/profile">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -48,33 +47,30 @@
                 }
             }
             ?>
-            <h2>Twoje konto</h2>
-            <div id="account-blocks">
-                <a href="/edit-profile" class="account-block">
-                    <img src="../assets/images/profile.svg" alt="profile">
-                    <h3>Edytuj profil</h3>
-                </a>
-                <a href="/my-offers" class="account-block">
-                    <img src="../assets/images/box.svg" alt="offers">
-                    <h3>Moje oferty</h3>
-                </a>
-                <a href="/change-password" class="account-block">
-                    <img src="../assets/images/settings.svg" alt="password">
-                    <h3>Zmień hasło</h3>
-                </a>
-                <a href="/logout" class="account-block">
-                    <img src="../assets/images/logout.svg" alt="logout">
-                    <h3>Wyloguj się</h3>
-                </a>
-                <?php
-                if (isset($_SESSION['user']->role) && $_SESSION['user']->role == 'admin') {
-                    echo '<a href="/dashboard" class="account-block">
-                        <img src="../assets/images/dashboard.svg" alt="logout">
-                        <h3>Centrum administracyjne</h3>
-                    </a>';
-                }
-                ?>
+            <h2>Dashboard</h2>
+            <div id="dashboard-container">
+            <?php
+            foreach ($users as $user) {
+                echo '<div class="user">
+                    <div class="user-info">
+                        <div class="user-name">
+                            <h3>' . $user['firstName'] . ' ' . $user['lastName'] . '</h3>
+                            <p>' . $user['phoneNumber'] . '</p>
+                        </div>
+                    </div>
+                    <div class="user-actions">
+                        <a href="/edit-user/' . $user['id'] . '"><img src="../assets/images/edit.svg" alt="edit"></a>
+                        <a href="/delete-user/' . $user['id'] . '"><img src="../assets/images/delete.svg" alt="delete"></a>
+                    </div>
+                </div>';
+            }
+            ?>
             </div>
+            <!-- <div class="pagination">
+                <a href="" class="active">1</a>
+                <a href="">2</a>
+                <a href="">3</a>
+            </div> -->
         </div>
     </main>
     <footer>

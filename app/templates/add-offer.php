@@ -41,8 +41,14 @@
     </header>
     <main>
         <div class="wrapper">
+            <?php
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo '<p class="message">' . $message . '</p>';
+                    }
+                }
+            ?>
             <h2>Nowa oferta</h2>
-
             <form class="offer" action="add-offer" method="post" enctype="multipart/form-data">
                 <label for="title">
                     Tytuł oferty:

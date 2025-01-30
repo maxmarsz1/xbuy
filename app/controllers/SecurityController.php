@@ -16,16 +16,17 @@ class SecurityController extends AppController {
         if($user && $username == $user->username && $password == $user->password){
             session_start();
             $_SESSION['user'] = $user;
-            header('Location: index');
+            header('Location: /index');
         } else {
-            $this->render('login', ['messages' => ['Błędne dane logowania']]);
+            $_SESSION['messages'][] = "Błędne dane logowania";
+            header('Location: /login');
         }
     }
 
     public function logout(){
         session_start();
         session_destroy();
-        header('Location: index');
+        header('Location: /index');
     }
 
     public function register(){
@@ -35,23 +36,28 @@ class SecurityController extends AppController {
         $password1 = $_POST['password1'];
 
         if(!$username || !$password || !$password1){
-            return $this->render('register', ['messages' => ['Wypełnij wszystkie pola']]);
+            $_SESSION['messages'][] = "Wypełnij wszystkie pola";
+            header('Location: /register');
         }
         if($userRepository->getUser($username)){
-            return $this->render('register', ['messages' => ['Użytkownik o podanym loginie już istnieje']]);
+            $_SESSION['messages'][] = "Taki użytkownik już istnieje";
+            header('Location: /register');
         }
         if($password != $password1){
-            return $this->render('register', ['messages' => ['Hasła nie są identyczne']]);
+            $_SESSION['messages'][] = "Podane hasła nie są identyczne";
+            header('Location: /register');
             
         }
         $password = sha1($_POST['password']);
         $userRepository->register($username, $password);
-        $this->render('login', ['messages' => ['Konto zostało utworzone']]);
+        $_SESSION['messages'][] = "Rejestracja przebiegła pomyślnie";
+        header('Location: /login');
     }
 
     public function changePassword(){
         if(!$_POST['oldPassword'] || !$_POST['newPassword'] || !$_POST['newPassword1']){
-            return $this->render('change-password', ['messages' => ['Wypełnij wszystkie pola']]);
+            $_SESSION['messages'][] = "Wypełnij wszystkie pola";
+            header('Location: /change-password');
         }
         session_start();
         $userRepository = new UserRepository();
@@ -60,14 +66,17 @@ class SecurityController extends AppController {
         $newPassword = sha1($_POST['newPassword']);
         $newPassword1 = sha1($_POST['newPassword1']);
         if($user->password != $oldPassword){
-            return $this->render('change-password', ['messages' => ['Podane obecne hasło jest niepoprawne']]);
+            $_SESSION['messages'][] = "Podane obecne hasło jest niepoprawne";
+            return header('Location: /change-password');
         }
         if($newPassword != $newPassword1){
-            return $this->render('change-password', ['messages' => ['Podane hasła nie są identyczne']]);
+            $_SESSION['messages'][] = "Podane hasła nie są identyczne";
+            return header('Location: /change-password');
         }
         $userRepository->updatePassword($user->id, $newPassword);
         $user = $userRepository->getUser($user->username);
         $_SESSION['user'] = $user;
-        $this->render('profile', ['user' => $user, 'messages' => ['Hasło zostało zmienione']]);
+        $_SESSION['messages'][] = "Zmiana hasła przebiegła pomyślnie";
+        header('Location: /profile');
     }
 }

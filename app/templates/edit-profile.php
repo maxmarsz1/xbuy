@@ -59,6 +59,10 @@
                     Nazwisko:
                     <input type="text" name="lastName" value="<?= $user->lastName ?>"  required>
                 </label>
+                <label for="phoneNumber">
+                    Numer telefonu:
+                    <input type="text" name="phoneNumber" value="<?= $user->phoneNumber ?>" required>
+                </label>
                 <div class="buttons">
                     <input type="submit" value="Zapisz zmiany">
                     <a href="/profile">Powrót</a>

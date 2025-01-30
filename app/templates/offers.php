@@ -21,7 +21,6 @@
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
             <?php
-            session_start();
             if (isset($_SESSION['user'])) {
                 echo '<li class="hidden-mobile"><a href="/profile">Konto</a></li>';
             } else {
@@ -60,7 +59,7 @@
             <?php
             foreach ($offers as $offer) {
                 echo '<a href="offer/'.$offer['id'].'" class="offer">
-                    <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" alt="offer">
+                    <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" class="offer-image" alt="offer image">
                     <div class="offer-info">
                         <div class="top">
                             <h3>'.$offer['title'].'</h3>

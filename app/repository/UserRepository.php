@@ -26,7 +26,8 @@ class UserRepository extends Repository
             $user['id'],
             $user['role'],
             $user['first_name'],
-            $user['last_name']
+            $user['last_name'],
+            $user['phone_number']
         );
     }
 
@@ -39,15 +40,16 @@ class UserRepository extends Repository
         $stmt->execute();
     }
 
-    public function updateUser(int $id, string $firstName, string $lastName) {
+    public function updateUser(int $id, string $firstName, string $lastName, string $phoneNumber) {
         $stmt = $this->database->connect()->prepare('
-            UPDATE public.users SET first_name = :firstName, last_name = :lastName WHERE id = :id
+            UPDATE public.users SET first_name = :firstName, last_name = :lastName, phone_number = :phoneNumber WHERE id = :id
         ');
 
 
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':firstName', $firstName, PDO::PARAM_STR);
         $stmt->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+        $stmt->bindParam(':phoneNumber', $phoneNumber, PDO::PARAM_STR);
         $stmt->execute();
     }
 
@@ -60,5 +62,15 @@ class UserRepository extends Repository
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->bindParam(':password', $password, PDO::PARAM_STR);
         $stmt->execute();
+    }
+
+    public function hasContactInfo(int $id) {
+        $stmt = $this->database->connect()->prepare('
+            SELECT * FROM public.users WHERE id = :id AND first_name IS NOT NULL AND last_name IS NOT NULL AND phone_number IS NOT NULL
+        ');
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
     }
 }

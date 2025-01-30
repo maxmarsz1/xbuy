@@ -10,36 +10,30 @@ class OfferControler extends AppController {
     const SUPPORTED_TYPES = ['image/png', 'image/jpeg'];
     const UPLOAD_DIRECTORY = '/uploads/';
 
-    private $message = [];
-
     public function __construct() {
         $this->repository = new OfferRepository();
     }
 
     public function addOffer(){   
         if(!isset($_FILES['file']) || !isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) ) {
-            $this->message[] = "Wypełnij wszystkie pola";
-            return $this->render('add-offer', [
-                'messages' => $this->message
-            ]);
+            $_SESSION['messages'][] = "Wypełnij wszystkie pola";
+            return $this->render('add-offer');
         }
-        if (is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])) {
-            session_start();
-            $image = $this->getImageName($_POST['title'], $_POST['description'], $_FILES['file']['name']);
-
-            move_uploaded_file(
-                $_FILES['file']['tmp_name'], 
-                dirname(__DIR__).self::UPLOAD_DIRECTORY.$image
-            );
-            $user_id = $_SESSION['user']->id;
-            $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY.$image);
-            $id = $this->repository->addOffer($offer, $user_id);
-            $this->message[] = "Oferta została dodana pomyślnie";
-
-            return $this->render('offers', [
-                'offers' => $this->repository->getOffers(),
-                'messages' => $this->message], '/offers');
+        if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$this->validate($_FILES['file'])) {
+            return $this->render('add-offer');
         }
+        session_start();
+        $image = $this->getImageName($_POST['title'], $_POST['description'], $_FILES['file']['name']);
+
+        move_uploaded_file(
+            $_FILES['file']['tmp_name'], 
+            dirname(__DIR__).self::UPLOAD_DIRECTORY.$image
+        );
+        $user_id = $_SESSION['user']->id;
+        $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY.$image);
+        $id = $this->repository->addOffer($offer, $user_id);
+        $_SESSION['messages'][] = "Oferta została dodana pomyślnie";
+        header('Location: /offers');
     }
 
     public function offers() {
@@ -63,11 +57,12 @@ class OfferControler extends AppController {
     }
 
     public function editOffer(string $id) {
+        session_start();
         $id = (int) $id;
         if($this->isPost()) {
             if(!isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) ) {
-                $this->message[] = "Wypełnij wszystkie pola";
-                return $this->render('edit-offer', ['offer' => $this->repository->getOffer($id), 'messages' => $this->message]);
+                $_SESSION['messages'][] = "Wypełnij wszystkie pola";
+                return $this->render('edit-offer', ['offer' => $this->repository->getOffer($id)]);
             }
             $image = null;
             if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])) {
@@ -79,19 +74,15 @@ class OfferControler extends AppController {
             }
             $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, isset($image) ? self::UPLOAD_DIRECTORY.$image : $this->repository->getOffer($id)->getImage());
             $this->repository->editOffer($id, $offer->getTitle(), $offer->getDescription(), $offer->getLocation(), $offer->getPrice(), $offer->getImage());
-            $this->message[] = "Oferta została edytowana pomyślnie";
-            return $this->render('offers', [
-                'offers' => $this->repository->getOffers(),
-                'messages' => $this->message], '/offers');
+            $_SESSION['messages'][] = "Oferta została edytowana pomyślnie";
+            header('Location: /offers');
         }
-        session_start();
+
         $offer = $this->repository->getOffer($id);
-        // var_dump($offer);
-        // print_r($_SESSION);
         if(!$offer || !isset($_SESSION['user']) || $offer->getUserId() != $_SESSION['user']->id) {
-            $this->message[] = "Oferta nie istnieje, lub nie masz dostępu do niej";
+            $_SESSION['messages'][] = "Oferta nie istnieje, lub nie masz dostępu do niej";
             $offers = $this->repository->getOffers();
-            return $this->render('offers', ['offers' => $offers, 'messages' => $this->message], '/offers');
+            header('Location: /offers');
         }
         
         return $this->render('edit-offer', ['offer' => $offer]);
@@ -100,12 +91,12 @@ class OfferControler extends AppController {
     private function validate(array $file): bool
     {
         if ($file['size'] > self::MAX_FILE_SIZE) {
-            $this->message[] = 'File is too large for destination file system.';
+            $_SESSION['messages'][] = 'Plik jest za duży.';
             return false;
         }
 
         if (!isset($file['type']) || !in_array($file['type'], self::SUPPORTED_TYPES)) {
-            $this->message[] = 'File type is not supported.';
+            $_SESSION['messages'][] = 'Plik nie jest wspierany';
             return false;
         }
         return true;

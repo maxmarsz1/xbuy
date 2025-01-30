@@ -55,7 +55,7 @@
                 foreach ($offers as $offer) {
                     echo '<div class="offer">
                         <a href="offer/'.$offer['id'].'" class="offer-link">
-                            <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" alt="offer">
+                            <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" class="offer-image" alt="offer">
                         </a>
                         <div class="offer-info">
                             <div class="top">
@@ -66,8 +66,8 @@
                             </div>
                             <div class="bottom">
                                 <div class="options">
-                                    <a href="edit-offer/'.$offer['id'].'"><img src="../assets/images/edit.svg" alt="edit"></a>
                                     <a href="delete-offer/'.$offer['id'].'"><img src="../assets/images/delete.svg" alt="delete"></a>
+                                    <a href="edit-offer/'.$offer['id'].'"><img src="../assets/images/edit.svg" alt="edit"></a>
                                 </div>
                                 <p class="price">'.$offer['price'].' zł</p>
                             </div>
