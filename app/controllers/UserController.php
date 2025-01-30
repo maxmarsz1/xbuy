@@ -7,6 +7,13 @@ class UserController extends AppController {
         $this->repository = new UserRepository();
     }
 
+    public function profile(){
+        session_start();
+        $user = $this->repository->getUser($_SESSION['user']->username);
+        $_SESSION['user'] = $user;
+        $this->render('profile/profile');
+    }
+
     public function editProfile() {
         session_start();
         $user_id = $_SESSION['user']->id;

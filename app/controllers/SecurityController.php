@@ -5,6 +5,7 @@ require_once __DIR__ . '/../repository/UserRepository.php';
 
 class SecurityController extends AppController {
     public function login(){
+        session_start();
         $userRepository = new UserRepository();
 
         $username = $_POST['username'];
@@ -14,7 +15,6 @@ class SecurityController extends AppController {
         
 
         if($user && $username == $user->username && $password == $user->password){
-            session_start();
             $_SESSION['user'] = $user;
             header('Location: /index');
         } else {
@@ -30,6 +30,7 @@ class SecurityController extends AppController {
     }
 
     public function register(){
+        session_start();
         $userRepository = new UserRepository();
         $username = $_POST['username'];
         $password = $_POST['password'];

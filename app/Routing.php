@@ -4,6 +4,7 @@ require_once 'controllers/DefaultController.php';
 require_once 'controllers/SecurityController.php';
 require_once 'controllers/OfferControler.php';
 require_once 'controllers/UserController.php';
+require_once 'controllers/AdminController.php';
 
 class Routing {
     public static $routes;

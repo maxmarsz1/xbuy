@@ -17,18 +17,18 @@ CREATE TABLE offers (
     price DECIMAL(10, 2),
     image VARCHAR(255),
     created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    user_id INT NOT NULL REFERENCES users(id)
+    user_id INT NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE TABLE categories (
     id SERIAL PRIMARY KEY,
     name VARCHAR(255),
-    category_id INT REFERENCES categories(id)
+    category_id INT REFERENCES categories(id) ON DELETE SET NULL
 );
 
 CREATE TABLE offers_categories (
-    offer_id INT NOT NULL REFERENCES offers(id),
-    category_id INT NOT NULL REFERENCES categories(id)
+    offer_id INT NOT NULL REFERENCES offers(id) ON DELETE CASCADE,
+    category_id INT NOT NULL REFERENCES categories(id) ON DELETE SET NULL
 );
 
 INSERT INTO categories (name, category_id) VALUES
@@ -68,14 +68,14 @@ INSERT INTO users (username, password, first_name, last_name, role, phone_number
 
 
 INSERT INTO offers (title, location, description, price, image, user_id) VALUES
-('Laptop', 'Warsaw', 'It''s a laptop', 2000.00, 'laptop.jpg', 1),
-('Phone', 'Warsaw', 'It''s a phone', 1000.00, 'phone.jpg', 2),
-('Furniture', 'Warsaw', 'It''s a furniture', 500.00, 'furniture.jpg', 3),
-('Bike', 'Warsaw', 'It''s a bike', 1500.00, 'bike.jpg', 4),
-('Dog', 'Warsaw', 'It''s a dog', 100.00, 'dog.jpg', 5),
-('Fish', 'Warsaw', 'It''s a fish', 50.00, 'fish.jpg', 5),
-('Bread', 'Warsaw', 'It''s a bread', 10.00, 'bread.jpg', 5),
-('Apple', 'Warsaw', 'It''s an apple', 5.00, 'apple.jpg', 5);
+('Laptop', 'Warsaw', 'It''s a laptop', 2000.00, 'uploads/laptop.jpg', 1),
+('Phone', 'Warsaw', 'It''s a phone', 1000.00, 'uploads/phone.jpg', 2),
+('Furniture', 'Warsaw', 'It''s a furniture', 500.00, 'uploads/furniture.jpg', 3),
+('Bike', 'Warsaw', 'It''s a bike', 1500.00, 'uploads/bike.jpg', 4),
+('Dog', 'Warsaw', 'It''s a dog', 100.00, 'uploads/dog.jpg', 5),
+('Fish', 'Warsaw', 'It''s a fish', 50.00, 'uploads/fish.jpg', 5),
+('Bread', 'Warsaw', 'It''s a bread', 10.00, 'uploads/bread.jpg', 5),
+('Apple', 'Warsaw', 'It''s an apple', 5.00, 'uploads/apple.jpg', 5);
 
 
 INSERT INTO offers_categories (offer_id, category_id) VALUES

@@ -14,18 +14,12 @@ class AppController{
     protected function isAuthorized(): bool {
         return isset($_SESSION['user']);
     }
-    protected function render(string $template = null, array $variables = [], string $redirectUrl = null) {
-        if ($redirectUrl) {
-            if (session_status() === PHP_SESSION_NONE) {
-                session_start();
-            }
-            if (isset($variables['messages'])) {
-                $_SESSION['messages'] = $variables['messages'];
-            }
-            header('Location: ' . $redirectUrl);
-            exit;
-        }
-        
+
+    protected function isAuthorizedAsAdmin(): bool {
+        return isset($_SESSION['user']) && $_SESSION['user']->role === 'admin';
+    }
+
+    protected function render(string $template = null, array $variables = []) {
         $templatePath = __DIR__ . '/../templates/' . $template . '.php';
         $output = "File not found";
         

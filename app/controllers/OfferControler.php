@@ -14,31 +14,46 @@ class OfferControler extends AppController {
         $this->repository = new OfferRepository();
     }
 
-    public function addOffer(){   
-        if(!isset($_FILES['file']) || !isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) ) {
-            $_SESSION['messages'][] = "Wypełnij wszystkie pola";
-            return $this->render('add-offer');
-        }
-        if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$this->validate($_FILES['file'])) {
-            return $this->render('add-offer');
-        }
+    public function addOffer(){
         session_start();
-        $image = $this->getImageName($_POST['title'], $_POST['description'], $_FILES['file']['name']);
-
-        move_uploaded_file(
-            $_FILES['file']['tmp_name'], 
-            dirname(__DIR__).self::UPLOAD_DIRECTORY.$image
-        );
-        $user_id = $_SESSION['user']->id;
-        $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY.$image);
-        $id = $this->repository->addOffer($offer, $user_id);
-        $_SESSION['messages'][] = "Oferta została dodana pomyślnie";
-        header('Location: /offers');
+        if($this->isPost()){
+            if(!isset($_FILES['file']) || !isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) ) {
+                $_SESSION['messages'][] = "Wypełnij wszystkie pola";
+                return $this->render('offers/add-offer');
+            }
+            if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$this->validate($_FILES['file'])) {
+                return $this->render('offers/add-offer');
+            }
+            $image = $this->getImageName($_POST['title'], $_POST['description'], $_FILES['file']['name']);
+    
+            move_uploaded_file(
+                $_FILES['file']['tmp_name'], 
+                dirname(__DIR__).self::UPLOAD_DIRECTORY.$image
+            );
+            $user_id = $_SESSION['user']->id;
+            $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY.$image);
+            $id = $this->repository->addOffer($offer, $user_id);
+            $_SESSION['messages'][] = "Oferta została dodana pomyślnie";
+            return header('Location: /offers');
+        }
+        
+        $userRepository = new UserRepository();
+        if(!$this->isAuthorized()) {
+            return header('Location: /login');
+        }
+        else if(!$userRepository->hasContactInfo($_SESSION['user']->id)) {
+            $offerRepository = new OfferRepository();
+            $_SESSION['messages'][] = "Aby dodać ofertę, musisz dodać dane kontaktowe";
+            return header('Location: /offers');
+        }
+        return $this->render('offers/add-offer');
+        
     }
 
     public function offers() {
+        session_start();
         $offers = $this->repository->getOffers();
-        return $this->render('offers', ['offers' => $offers, 'messages' => $this->message]);
+        return $this->render('offers/offers', ['offers' => $offers]);
     }
 
     public function myOffers(){
@@ -46,13 +61,13 @@ class OfferControler extends AppController {
         $user_id = $_SESSION['user']->id;
         $offers = $this->repository->getUserOffers($user_id);
 
-        return $this->render('my-offers', ['offers' => $offers, 'messages' => $this->message]);
+        return $this->render('profile/my-offers', ['offers' => $offers, 'messages' => $this->message]);
     }
 
     public function deleteOffer(int $id) {
         $this->repository->removeOffer($id);
         $this->message[] = "Oferta została usunięta pomyślnie";
-        return $this->render('offers', ['offers' => $this->repository->getOffers(), 'messages' => $this->message], '/offers');
+        return $this->render('offers/offers', ['offers' => $this->repository->getOffers(), 'messages' => $this->message], '/offers');
         exit;
     }
 
@@ -62,7 +77,7 @@ class OfferControler extends AppController {
         if($this->isPost()) {
             if(!isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) ) {
                 $_SESSION['messages'][] = "Wypełnij wszystkie pola";
-                return $this->render('edit-offer', ['offer' => $this->repository->getOffer($id)]);
+                return $this->render('offers/edit-offer', ['offer' => $this->repository->getOffer($id)]);
             }
             $image = null;
             if(is_uploaded_file($_FILES['file']['tmp_name']) && $this->validate($_FILES['file'])) {
@@ -85,7 +100,7 @@ class OfferControler extends AppController {
             header('Location: /offers');
         }
         
-        return $this->render('edit-offer', ['offer' => $offer]);
+        return $this->render('offers/edit-offer', ['offer' => $offer]);
     }
 
     private function validate(array $file): bool

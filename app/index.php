@@ -15,15 +15,20 @@ Routing::get('logout', 'SecurityController');
 Routing::get('change-password', 'DefaultController');
 Routing::post('change-password', 'SecurityController');
 
-Routing::get('add-offer', 'DefaultController');
+Routing::get('add-offer', 'OfferControler');
 Routing::post('add-offer', 'OfferControler');
 Routing::get('edit-offer', 'OfferControler');
 Routing::post('edit-offer', 'OfferControler');
 Routing::get('delete-offer', 'OfferControler');
 
-Routing::get('profile', 'DefaultController');
+Routing::get('profile', 'UserController');
 Routing::get('my-offers', 'OfferControler');
 Routing::get('edit-profile', 'DefaultController');
 Routing::post('edit-profile', 'UserController');
+
+Routing::get('dashboard', 'AdminController');
+Routing::get('edit-user', 'AdminController');
+Routing::post('edit-user', 'AdminController');
+Routing::get('delete-user', 'AdminController');
 
 Routing::run($path);

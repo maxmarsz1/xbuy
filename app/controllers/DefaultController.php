@@ -12,7 +12,7 @@ class DefaultController extends AppController {
             header('Location: index');
         }
         else{
-            $this->render('login');
+            $this->render('auth/login');
         }
     }
 
@@ -22,14 +22,14 @@ class DefaultController extends AppController {
             header('Location: index');
         }
         else{
-            $this->render('register');
+            $this->render('auth/register');
         }
     }
 
     public function changePassword() {
         session_start();
         if($this->isAuthorized()) {
-            return $this->render('change-password');
+            return $this->render('profile/change-password');
         }
         else{
             header('Location: /login');
@@ -43,7 +43,7 @@ class DefaultController extends AppController {
             header('Location: /login');
         }
         else if($userRepository->hasContactInfo($_SESSION['user']->id)) {
-            $this->render('add-offer');
+            $this->render('offers/add-offer');
         }
         else{
             $offerRepository = new OfferRepository();
@@ -52,20 +52,10 @@ class DefaultController extends AppController {
         }
     }
 
-    public function profile() {
-        session_start();
-        if($this->isAuthorized()) {
-            return $this->render('profile');
-        }
-        else{
-            header('Location: /login');
-        }
-    }
-
     public function editProfile() {
         session_start();
         if($this->isAuthorized()) {
-            return $this->render('edit-profile');
+            return $this->render('profile/edit-profile');
         }
         else{
             header('Location: /login');

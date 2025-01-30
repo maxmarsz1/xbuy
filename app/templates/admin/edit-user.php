@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body id="dashboard">
+<body id="edit-profile">
     <header>
         <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
@@ -20,6 +20,7 @@
                 Kategorie
                 <img src="../assets/images/dropdown.svg" alt="dropdown">
             </a></li>
+            <li class="hidden-mobile"><a href="/profile">Konto</a></li>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
@@ -41,36 +42,43 @@
     <main>
         <div class="wrapper">
             <?php
-            if (isset($messages)) {
-                foreach ($messages as $message) {
-                    echo '<p class="message">' . $message . '</p>';
+                $user = $_SESSION['user'];
+                if (isset($messages)) {
+                    foreach ($messages as $message) {
+                        echo '<p class="message">' . $message . '</p>';
+                    }
                 }
-            }
             ?>
-            <h2>Dashboard</h2>
-            <div id="dashboard-container">
-            <?php
-            foreach ($users as $user) {
-                echo '<div class="user">
-                    <div class="user-info">
-                        <div class="user-name">
-                            <h3>' . $user['firstName'] . ' ' . $user['lastName'] . '</h3>
-                            <p>' . $user['phoneNumber'] . '</p>
-                        </div>
-                    </div>
-                    <div class="user-actions">
-                        <a href="/edit-user/' . $user['id'] . '"><img src="../assets/images/edit.svg" alt="edit"></a>
-                        <a href="/delete-user/' . $user['id'] . '"><img src="../assets/images/delete.svg" alt="delete"></a>
-                    </div>
-                </div>';
-            }
-            ?>
-            </div>
-            <!-- <div class="pagination">
-                <a href="" class="active">1</a>
-                <a href="">2</a>
-                <a href="">3</a>
-            </div> -->
+            <h2>Edytuj profil <?= $editUser->username ?></h2>
+            <form class="profile" action="<?= '/edit-user/'.$editUser->id;?>" method="post" enctype="multipart/form-data">
+                <label for="firstName">
+                    Imię:
+                    <input type="text" name="firstName" value="<?= $editUser->firstName ?>">
+                </label>
+                <label for="lastName">
+                    Nazwisko:
+                    <input type="text" name="lastName" value="<?= $editUser->lastName ?>">
+                </label>
+                <label for="phoneNumber">
+                    Numer telefonu:
+                    <input type="text" name="phoneNumber" value="<?= $editUser->phoneNumber ?>">
+                </label>
+                <label for="password">
+                    Hasło:
+                    <input type="password" name="password">
+                </label>
+                <label for="role">
+                    Role:
+                    <select name="role">
+                        <option value="user" <?php if($editUser->role == "user") echo "selected"; ?>>Użytkownik</option>
+                        <option value="admin" <?php if($editUser->role == "admin") echo "selected"; ?>>Administrator</option>
+                    </select>
+                </label>
+                <div class="buttons">
+                    <input type="submit" value="Zapisz zmiany">
+                    <a href="/dashboard">Powrót</a>
+                </div>
+            </form>
         </div>
     </main>
     <footer>
