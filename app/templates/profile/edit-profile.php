@@ -61,7 +61,7 @@
                 </label>
                 <label for="phoneNumber">
                     Numer telefonu:
-                    <input type="text" name="phoneNumber" value="<?= $user->phoneNumber ?>" required>
+                    <input type="text" id="phoneNumber" name="phoneNumber" value="<?= $user->phoneNumber ?>" required>
                 </label>
                 <div class="buttons">
                     <input type="submit" value="Zapisz zmiany">

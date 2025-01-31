@@ -14,46 +14,72 @@ class OfferControler extends AppController {
         $this->repository = new OfferRepository();
     }
 
-    public function addOffer(){
+    public function addOffer() {
         session_start();
-        if($this->isPost()){
-            if(!isset($_FILES['file']) || !isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) ) {
+        if ($this->isPost()) {
+            if (!isset($_FILES['file']) || !isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) || !isset($_POST['category'])) {
                 $_SESSION['messages'][] = "Wypełnij wszystkie pola";
                 return $this->render('offers/add-offer');
             }
+    
             if (!is_uploaded_file($_FILES['file']['tmp_name']) || !$this->validate($_FILES['file'])) {
                 return $this->render('offers/add-offer');
             }
-            $image = $this->getImageName($_POST['title'], $_POST['description'], $_FILES['file']['name']);
     
+            $image = $this->getImageName($_POST['title'], $_POST['description'], $_FILES['file']['name']);
             move_uploaded_file(
-                $_FILES['file']['tmp_name'], 
-                dirname(__DIR__).self::UPLOAD_DIRECTORY.$image
+                $_FILES['file']['tmp_name'],
+                dirname(__DIR__) . self::UPLOAD_DIRECTORY . $image
             );
+    
             $user_id = $_SESSION['user']->id;
-            $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY.$image);
-            $id = $this->repository->addOffer($offer, $user_id);
-            $_SESSION['messages'][] = "Oferta została dodana pomyślnie";
+            $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY . $image);
+            $offer_id = $this->repository->addOffer($offer, $user_id);
+    
+            if ($offer_id && isset($_POST['category'])) {
+                $this->repository->assignCategoryToOffer($offer_id, $_POST['category']);
+            }
+    
+            $_SESSION['messages'][] = "Oferta została dodana pomyślnie";
             return header('Location: /offers');
         }
-        
+    
         $userRepository = new UserRepository();
-        if(!$this->isAuthorized()) {
+        if (!$this->isAuthorized()) {
             return header('Location: /login');
-        }
-        else if(!$userRepository->hasContactInfo($_SESSION['user']->id)) {
-            $offerRepository = new OfferRepository();
-            $_SESSION['messages'][] = "Aby dodać ofertę, musisz dodać dane kontaktowe";
+        } else if (!$userRepository->hasContactInfo($_SESSION['user']->id)) {
+            $_SESSION['messages'][] = "Aby dodać ofertę, musisz dodać dane kontaktowe";
             return header('Location: /offers');
         }
-        return $this->render('offers/add-offer');
-        
+    
+        $categories = $this->repository->getAllCategories();
+        return $this->render('offers/add-offer', ['categories' => $categories]);
     }
 
     public function offers() {
         session_start();
-        $offers = $this->repository->getOffers();
-        return $this->render('offers/offers', ['offers' => $offers]);
+    
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        $perPage = 10;
+    
+        $offset = ($page - 1) * $perPage;
+        $offers = $this->repository->getPaginatedOffers($offset, $perPage);
+        $totalOffers = $this->repository->getTotalOffers();
+        $totalPages = ceil($totalOffers / $perPage);
+    
+        return $this->render('offers/offers', [
+            'offers' => $offers,
+            'currentPage' => $page,
+            'totalPages' => $totalPages,
+        ]);
+    }
+
+    public function offer(int $id) {
+        session_start();
+        $offer = $this->repository->getOffer($id);
+        $date = date('d.m.Y\\r. \\o \\g\\o\\d\\z. H:i', strtotime($offer->getCreatedDate()));
+        $offer->setCreatedDate($date);
+        return $this->render('offers/offer', ['offer' => $offer]);
     }
 
     public function myOffers(){
@@ -67,7 +93,7 @@ class OfferControler extends AppController {
     public function deleteOffer(int $id) {
         $this->repository->removeOffer($id);
         $this->message[] = "Oferta została usunięta pomyślnie";
-        return $this->render('offers/offers', ['offers' => $this->repository->getOffers(), 'messages' => $this->message], '/offers');
+        header('Location: /offers');
         exit;
     }
 

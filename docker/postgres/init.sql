@@ -28,7 +28,8 @@ CREATE TABLE categories (
 
 CREATE TABLE offers_categories (
     offer_id INT NOT NULL REFERENCES offers(id) ON DELETE CASCADE,
-    category_id INT NOT NULL REFERENCES categories(id) ON DELETE SET NULL
+    category_id INT NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+    PRIMARY KEY (offer_id, category_id)
 );
 
 INSERT INTO categories (name, category_id) VALUES
@@ -60,11 +61,11 @@ INSERT INTO categories (name, category_id) VALUES
 
 
 INSERT INTO users (username, password, first_name, last_name, role, phone_number) VALUES
-('admin', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Admin', 'User', 'admin', '123-456-7890'),
-('john_doe', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'John', 'Doe', 'admin', '234-567-8901'),
-('jane_smith', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Jane', 'Smith', 'user', '345-678-9012'),
-('alice_wong', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Alice', 'Wong', 'user', '456-789-0123'),
-('bob_jones', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Bob', 'Jones', 'user', '567-890-1234');
+('admin', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Admin', 'User', 'admin', '123456890'),
+('john_doe', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'John', 'Doe', 'admin', '234567901'),
+('jane_smith', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Jane', 'Smith', 'user', '345678912'),
+('alice_wong', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Alice', 'Wong', 'user', '456780123'),
+('bob_jones', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Bob', 'Jones', 'user', '568901234');
 
 
 INSERT INTO offers (title, location, description, price, image, user_id) VALUES
@@ -87,3 +88,9 @@ INSERT INTO offers_categories (offer_id, category_id) VALUES
 (6, 5),
 (7, 5),
 (8, 5);
+
+
+create view vOffers as select o.*, c.name, u.first_name, u.last_name, u.phone_number from offers o 
+left join offers_categories oc on o.id = oc.offer_id
+left join categories c on c.id = oc.category_id
+left join users u on u.id = o.user_id

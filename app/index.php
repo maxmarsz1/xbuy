@@ -15,6 +15,7 @@ Routing::get('logout', 'SecurityController');
 Routing::get('change-password', 'DefaultController');
 Routing::post('change-password', 'SecurityController');
 
+Routing::get('offer', 'OfferControler');
 Routing::get('add-offer', 'OfferControler');
 Routing::post('add-offer', 'OfferControler');
 Routing::get('edit-offer', 'OfferControler');

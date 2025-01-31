@@ -272,6 +272,15 @@ main{
 #offers-container > a{
     text-decoration: none;
 }
+.offer a{
+    text-decoration: none;
+}
+.offer .thumb{
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 #offers-container .offer .offer-info .location{
     font-weight: 500;
     font-size: .8rem;
@@ -285,8 +294,95 @@ main{
     display: flex;
     justify-content: space-between;
     width: 100%
-
 } 
+#offer-container{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 2rem;
+    position: relative;
+}
+#offer-container .back{
+    position: absolute;
+    top: 0;
+    left: 1rem;
+    cursor: pointer;
+    font-size: .8rem;
+}
+#offer-container .back a{
+    text-decoration: none;
+}
+#offer-container .back img{
+    width: 15px;
+}
+#offer-container .thumb{
+    min-width: 40%;
+    flex-basis: 40%;
+    height: auto;
+}
+#offer-container .thumb img{
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+#offer-container .info{
+    flex-basis: 50%;
+    min-width: 50%;
+}
+#offer-container .info h2{
+    font-weight: 600;
+    font-size: 2rem;
+    margin-bottom: .3rem;
+}
+#offer-container .info .category{
+    padding: .5rem 3rem;
+    width: max-content;
+    background-color: #D9D9D9;
+    border-radius: 50px;
+    font-size: .9rem;
+    font-weight: 500;
+}
+#offer-container .info .price{
+    color: var(--main-color);
+    font-size: 2rem;
+}
+#offer-container .info .contact{
+    padding: .6rem 2rem;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    position: relative;
+    z-index: 10;
+}
+#offer-container .contact-block{
+    width: max-content;
+    position: relative;
+}
+#offer-container .contact-block .contact-info{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    z-index: 15;
+    pointer-events: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--main-color);
+    border-radius: 50px;
+    opacity: 0;
+    transition: .3s all ease;
+}
+#offer-container .contact-block .contact-info.active{
+    opacity: 1;
+}
+#offer-container .info h4{
+    margin-top: 1rem;
+}
+
 :is(#edit-offer, #edit-profile) form .buttons{
     display: flex;
     gap: 10px;

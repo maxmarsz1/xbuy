@@ -68,6 +68,16 @@
                         <input type="number" name="price" step="0.01" required>
                     </span>
                 </label>
+                <label for="category">
+                    Kategorie:
+                    <select name="category" required>
+                        <?php
+                        foreach ($categories as $category) {
+                            echo '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
+                        }
+                        ?>
+                    </select>
+                </label>
                 <label for="image">
                     Zdjecie:
                     <span class="image">

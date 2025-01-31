@@ -9,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
-<body id="offers">
+<body id="offer">
     <header>
         <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
@@ -54,38 +54,40 @@
                 }
             }
             ?>
-            <h2>Najnowsze oferty</h2>
-            <div id="offers-container">
-            <?php
-            foreach ($offers as $offer) {
-                echo '<a href="offer/'.$offer['id'].'" class="offer">
-                    <div class="thumb">
-                        <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" class="offer-image" alt="offer image">
+            <div id="offer-container">
+                <div class="back">
+                    <a href="/offers">
+                        <img src="../assets/images/arrow.svg" alt="arrow">
+                        Powrót do ogłoszeń
+                    </a>
+                </div>
+                <div class="thumb">
+                    <img src="/../<?= $offer->getImage() ?>" alt="laptop">
+                </div>
+                <div class="info">
+                    <h2 class="title"><?= $offer->getTitle() ?></h2>
+                    <p class="category"><?= $offer->getCategoryName() ?></p>
+                    <p class="price"><?= $offer->getPrice() ?> zł</p>
+                    <div class="contact-block">
+                        <button class="contact">Kontakt do sprzedawcy</button>
+                        <span class="contact-info">
+                            <p><?= $offer->getUserFirstName()." ".$offer->getUserLastName() ?></p>
+                            <p><?= $offer->getUserPhoneNumber() ?></p>
+                        </span>
                     </div>
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>'.$offer['title'].'</h3>
-                            <p class="location">'.$offer['location'].'</p>
-                        </div>
-                        <p class="price">'.$offer['price'].' zł</p>
-                    </div>
-                </a>';
-            }
-            ?>
+                    <h4>Lokalizacja</h4>
+                    <p class="location"><?= $offer->getLocation() ?></p>
+                    <h4>Opis oferty</h4>
+                    <p class="description"><?= $offer->getDescription() ?></p>
+                    <h4>Oferta wystawiona</h4>
+                    <p class="date"><?= $offer->getCreatedDate() ?></p>
+                </div>
             </div>
-            <div class="pagination">
-            <?php if ($currentPage > 1): ?>
-                <a href="?page=<?= $currentPage - 1 ?>">Poprzednia</a>
-            <?php endif; ?>
-
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="?page=<?= $i ?>" class="<?= $i === $currentPage ? 'active' : '' ?>"><?= $i ?></a>
-            <?php endfor; ?>
-
-            <?php if ($currentPage < $totalPages): ?>
-                <a href="?page=<?= $currentPage + 1 ?>">Następna</a>
-            <?php endif; ?>
-        </div>
+            <!-- <div class="pagination">
+                <a href="" class="active">1</a>
+                <a href="">2</a>
+                <a href="">3</a>
+            </div> -->
         </div>
     </main>
     <footer>

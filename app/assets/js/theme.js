@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const searchIcon = document.getElementById('search-icon');
 
+
+    // mobile search
     mobileSearchIcon.addEventListener('click', () => {
         mobileSearchIcon.style.display = 'none';
         searchInput.classList.remove('hidden-mobile');
@@ -18,6 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileSearchIcon.style.display = 'block';
     })
 
+    // mobile menu
     hamburger.addEventListener('click', () => {
         mobileMenu.classList.toggle('active');
         dimmed.style.display = 'block';
@@ -29,6 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
         dimmed.style.display = 'none';
     })
 
+
+    // add offer/edit offer image handling
     const imageInput = document.querySelector('.image input[type="file"]');
     const imageBtn = document.querySelector('.image .image-btn');
     if(imageInput && imageBtn){
@@ -40,5 +45,30 @@ document.addEventListener('DOMContentLoaded', () => {
             imageBtn.innerText = fileName;
         })
     }
+
+    // offer page - contact info toggling
+    const contactButton = document.querySelector("button.contact");
+    const contactInfo = document.querySelector(".contact-info");
+    if(contactButton && contactInfo){
+        contactButton.addEventListener('click', () => {
+            contactInfo.classList.toggle('active');
+        })
+    }
+
+    // edit profile phone number validation
+    const phoneInput = document.getElementById('phoneNumber');
+    const phoneForm = phoneInput.closest('form');
+    if(phoneInput && phoneForm){
+        phoneInput.addEventListener('input', () => {
+            phoneInput.value = phoneInput.value.replace(/[^0-9]/g, '');
+        })
+        phoneForm.addEventListener('submit', (e) => {
+            if(phoneInput.value.length < 8){
+                e.preventDefault();
+                alert('Numer telefonu musi mieć conajmniej 8 cyfr');
+            }
+        })
+    }
+
     
 })

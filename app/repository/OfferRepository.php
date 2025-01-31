@@ -3,18 +3,15 @@
 require_once 'Repository.php';
 require_once __DIR__.'/../models/Offer.php';
 
-class OfferRepository extends Repository
-{
+class OfferRepository extends Repository{
 
-    public function getOffer(int $id): ?Offer
-    {
+    public function getOffer(int $id): ?Offer{
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.offers WHERE id = :id
+            SELECT * FROM public.voffers WHERE id = :id
         ');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         $offer = $stmt->fetch(PDO::FETCH_ASSOC);
-
         if ($offer == false) {
             return null;
         }
@@ -27,18 +24,38 @@ class OfferRepository extends Repository
             $offer['user_id'],
             $offer['image'],
             $offer['created_date'],
-            $offer['id']
+            $offer['id'],
+            $offer['name'],
+            $offer['first_name'],
+            $offer['last_name'],
+            $offer['phone_number']
         );
     }
 
-    public function getOffers(): array
-    {
+    public function getOffers(): array{
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.offers order by created_date
         ');
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);    
+    }
+
+    public function getPaginatedOffers($offset, $perPage) {
+        $stmt = $this->database->connect()->prepare("
+            SELECT * FROM offers LIMIT :limit OFFSET :offset
+        ");
+        $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getTotalOffers() {
+        $stmt = $this->database->connect()->query("
+            SELECT COUNT(*) as total FROM offers
+        ");
+        return $stmt->fetchColumn();
     }
 
     public function getUserOffers(int $userId): array{
@@ -51,8 +68,7 @@ class OfferRepository extends Repository
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addOffer(Offer $offer, int $user_id): int
-    {
+    public function addOffer(Offer $offer, int $user_id): int{
         $date = new DateTime();
         $pdo = $this->database->connect();
         $stmt = $pdo->prepare('
@@ -72,6 +88,23 @@ class OfferRepository extends Repository
         ]);
 
         return $pdo->lastInsertId();
+    }
+
+    public function assignCategoryToOffer($offer_id, $category_id) {
+        $stmt = $this->database->connect()->prepare("
+        INSERT INTO offers_categories (offer_id, category_id) VALUES (:offer_id, :category_id)
+        ");
+        $stmt->execute([
+            ':offer_id' => $offer_id,
+            ':category_id' => $category_id,
+        ]);
+    }
+
+    public function getAllCategories() {
+        $stmt = $this->database->connect()->query("
+        SELECT * FROM categories
+        ");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function removeOffer(int $id) {

@@ -54,7 +54,7 @@
             if(isset($offers) && count($offers) > 0) {
                 foreach ($offers as $offer) {
                     echo '<div class="offer">
-                        <a href="offer/'.$offer['id'].'" class="offer-link">
+                        <a href="offer/'.$offer['id'].'" class="offer-link thumb">
                             <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" class="offer-image" alt="offer">
                         </a>
                         <div class="offer-info">

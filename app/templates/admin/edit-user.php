@@ -68,7 +68,7 @@
                     <input type="password" name="password">
                 </label>
                 <label for="role">
-                    Role:
+                    Rola:
                     <select name="role">
                         <option value="user" <?php if($editUser->role == "user") echo "selected"; ?>>Użytkownik</option>
                         <option value="admin" <?php if($editUser->role == "admin") echo "selected"; ?>>Administrator</option>
