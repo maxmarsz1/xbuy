@@ -7,7 +7,8 @@ class AdminController extends AppController
     public function dashboard(){
         session_start();
         if(!$this->isAuthorizedAsAdmin()) {
-            return header('Location: /offers');
+            header('Location: /offers');
+            exit;
         }
         $userRepository = new UserRepository();
         $users = $userRepository->getAllUsers();
@@ -17,7 +18,8 @@ class AdminController extends AppController
     public function editUser($id) {
         session_start();
         if(!$this->isAuthorizedAsAdmin()) {
-            return header('Location: /offers');
+            header('Location: /offers');
+            exit;
         }
         
         if($this->isPost()) {
@@ -41,12 +43,14 @@ class AdminController extends AppController
     public function deleteUser($id) {
         session_start();
         if(!$this->isAuthorizedAsAdmin()) {
-            return header('Location: /offers');
+            header('Location: /offers');
+            exit;
         }
         $userRepository = new UserRepository();
         $userRepository->deleteUser($id);
         $_SESSION['messages'][] = "Użytkownik został usunięty pomyślnie";
         header('Location: /dashboard');
+        exit;
     }
 
 }

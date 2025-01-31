@@ -5,31 +5,13 @@ require_once __DIR__.'/../models/Offer.php';
 
 class OfferRepository extends Repository{
 
-    public function getOffer(int $id): ?Offer{
+    public function getOffer(int $id): ?array {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.voffers WHERE id = :id
+            SELECT * FROM offers WHERE id = :id
         ');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
-        $offer = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($offer == false) {
-            return null;
-        }
-
-        return new Offer(
-            $offer['title'],
-            $offer['description'],
-            $offer['location'],
-            $offer['price'],
-            $offer['user_id'],
-            $offer['image'],
-            $offer['created_date'],
-            $offer['id'],
-            $offer['name'],
-            $offer['first_name'],
-            $offer['last_name'],
-            $offer['phone_number']
-        );
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
     }
 
     public function getOffers(): array{
@@ -105,6 +87,49 @@ class OfferRepository extends Repository{
         SELECT * FROM categories
         ");
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getOfferCategories($offer_id) {
+        $stmt = $this->database->connect()->prepare("
+            SELECT c.id, c.name 
+            FROM categories c
+            JOIN offers_categories oc ON c.id = oc.category_id
+            WHERE oc.offer_id = :offer_id
+        ");
+        $stmt->execute([
+            ':offer_id' => $offer_id,
+        ]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function updateOfferCategories(int $offer_id, array $category_ids): void {
+        $stmt = $this->database->connect()->prepare('
+            DELETE FROM offers_categories WHERE offer_id = :offer_id
+        ');
+        $stmt->bindParam(':offer_id', $offer_id, PDO::PARAM_INT);
+        $stmt->execute();
+    
+        foreach ($category_ids as $category_id) {
+            $stmt = $this->database->connect()->prepare('
+                INSERT INTO offers_categories (offer_id, category_id) VALUES (:offer_id, :category_id)
+            ');
+            $stmt->bindParam(':offer_id', $offer_id, PDO::PARAM_INT);
+            $stmt->bindParam(':category_id', $category_id, PDO::PARAM_INT);
+            $stmt->execute();
+        }
+    }
+
+    public function getOfferUser($offer_id) {
+        $stmt = $this->database->connect()->prepare("
+            SELECT u.first_name, u.last_name, u.phone_number
+            FROM users u
+            JOIN offers o ON u.id = o.user_id
+            WHERE o.id = :offer_id
+        ");
+        $stmt->execute([
+            ':offer_id' => $offer_id,
+        ]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
     public function removeOffer(int $id) {

@@ -10,12 +10,7 @@ class Offer{
     private $createdDate;
     private $userId;
 
-    private $categoryName;
-    private $userFirstName;
-    private $userLastName;
-    private $userPhoneNumber;
-
-    public function __construct($title, $description, $location, $price, $userId, $image, $createdDate = null, $id = null, $categoryName = null, $userFirstName = null, $userLastName = null, $userPhoneNumber = null){
+    public function __construct($title, $description, $location, $price, $userId, $image, $createdDate = null, $id = null){
         $this->id = $id;
         $this->title = $title;
         $this->location = $location;
@@ -29,11 +24,6 @@ class Offer{
             $this->createdDate = $createdDate;
         }
         $this->userId = $userId;
-
-        $this->categoryName = $categoryName;
-        $this->userFirstName = $userFirstName;
-        $this->userLastName = $userLastName;
-        $this->userPhoneNumber = $userPhoneNumber;
     }
 
     public function getId(){
@@ -60,19 +50,6 @@ class Offer{
     public function getUserId(){
         return $this->userId;
     }
-
-    public function getCategoryName(){
-        return $this->categoryName;
-    }
-    public function getUserFirstName(){
-        return $this->userFirstName;
-    }
-    public function getUserLastName(){
-        return $this->userLastName;
-    }
-    public function getUserPhoneNumber(){
-        return $this->userPhoneNumber;
-    }
     
     public function setId($id){
         $this->id = $id;
@@ -97,18 +74,5 @@ class Offer{
     }
     public function setUserId($userId){
         $this->userId = $userId;
-    }
-
-    public function setCategoryName($categoryName){
-        $this->categoryName = $categoryName;
-    }
-    public function setUserFirstName($userFirstName){
-        $this->userFirstName = $userFirstName;
-    }
-    public function setUserLastName($userLastName){
-        $this->userLastName = $userLastName;
-    }
-    public function setUserPhoneNumber($userPhoneNumber){
-        $this->userPhoneNumber = $userPhoneNumber;
     }
 }

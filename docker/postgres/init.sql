@@ -32,62 +32,46 @@ CREATE TABLE offers_categories (
     PRIMARY KEY (offer_id, category_id)
 );
 
-INSERT INTO categories (name, category_id) VALUES
-('Electronics', null),
-('Home & Garden', null),
-('Fashion', null),
-('Sport', null),
-('Food', null),
-('Laptops', 1),
-('Phones', 1),
-('Computers', 1),
-('Tablets', 1),
-('Furniture', 2),
-('Kitchen', 2),
-('Clothing', 3),
-('Shoes', 3),
-('Accessories', 3),
-('Bikes', 4),
-('Scooters', 4),
-('Skateboards', 4),
-('Dogs', 5),
-('Cats', 5),
-('Meat', 5),
-('Fish', 5),
-('Beverages', 5),
-('Fruits', 5),
-('Vegetables', 5),
-('Breads', 5);
+INSERT INTO users (id, username, password, first_name, last_name, phone_number, role) VALUES
+(1, 'john_doe', 'hashed_pass1', 'John', 'Doe', '48500100200', 'user'),
+(2, 'jane_smith', 'hashed_pass2', 'Jane', 'Smith', '48500300400', 'user'),
+(3, 'admin', 'hashed_admin_pass', 'Adam', 'Admin', '48500500600', 'admin');
 
+INSERT INTO categories (id, name, category_id) VALUES
+(1, 'Electronics', NULL),
+(2, 'Laptops', 1),
+(3, 'Phones', 1),
+(4, 'Animals', NULL),
+(5, 'Dogs', 4),
+(6, 'Fish', 4),
+(7, 'Home', NULL),
+(8, 'Furniture', 7),
+(9, 'Food', 7),
+(10, 'Bread', 9),
+(11, 'Fruits', 9),
+(12, 'Apples', 11),
+(13, 'Vehicles', NULL),
+(14, 'Bikes', 13);
 
-INSERT INTO users (username, password, first_name, last_name, role, phone_number) VALUES
-('admin', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Admin', 'User', 'admin', '123456890'),
-('john_doe', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'John', 'Doe', 'admin', '234567901'),
-('jane_smith', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Jane', 'Smith', 'user', '345678912'),
-('alice_wong', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Alice', 'Wong', 'user', '456780123'),
-('bob_jones', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Bob', 'Jones', 'user', '568901234');
-
-
-INSERT INTO offers (title, location, description, price, image, user_id) VALUES
-('Laptop', 'Warsaw', 'It''s a laptop', 2000.00, 'uploads/laptop.jpg', 1),
-('Phone', 'Warsaw', 'It''s a phone', 1000.00, 'uploads/phone.jpg', 2),
-('Furniture', 'Warsaw', 'It''s a furniture', 500.00, 'uploads/furniture.jpg', 3),
-('Bike', 'Warsaw', 'It''s a bike', 1500.00, 'uploads/bike.jpg', 4),
-('Dog', 'Warsaw', 'It''s a dog', 100.00, 'uploads/dog.jpg', 5),
-('Fish', 'Warsaw', 'It''s a fish', 50.00, 'uploads/fish.jpg', 5),
-('Bread', 'Warsaw', 'It''s a bread', 10.00, 'uploads/bread.jpg', 5),
-('Apple', 'Warsaw', 'It''s an apple', 5.00, 'uploads/apple.jpg', 5);
-
+INSERT INTO offers (id, title, description, location, price, image, user_id, created_date) VALUES
+(1, 'Powerful Gaming Laptop with RGB Keyboard', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.', 'Warsaw', 4500.00, 'uploads/laptop.jpg', 1, '2024-03-10 14:30:00'),
+(2, 'Vintage Wooden Dining Table', 'Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.', 'Krakow', 1200.00, 'uploads/furniture.jpg', 2, '2024-03-11 09:15:00'),
+(3, 'Mountain Bike with 21 Gears', 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'Gdansk', 800.00, 'uploads/bike.jpg', 1, '2024-03-12 16:45:00'),
+(4, 'Golden Retriever Puppies', 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.', 'Poznan', 2500.00, 'uploads/dog.jpg', 2, '2024-03-13 11:00:00'),
+(5, 'Organic Whole Grain Bread', 'Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores.', 'Wroclaw', 8.50, 'uploads/bread.jpg', 1, '2024-03-14 07:30:00'),
+(6, 'Fresh Red Delicious Apples', 'Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.', 'Lodz', 4.99, 'uploads/apple.jpg', 2, '2024-03-15 12:15:00'),
+(7, 'Latest Smartphone Model 2024', 'Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam.', 'Katowice', 3499.99, 'uploads/phone.jpg', 1, '2024-03-16 10:00:00'),
+(8, 'Exotic Tropical Fish Aquarium Set', 'Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur.', 'Gdynia', 600.00, 'uploads/fish.jpg', 2, '2024-03-17 14:20:00');
 
 INSERT INTO offers_categories (offer_id, category_id) VALUES
-(1, 1),
-(2, 1),
-(3, 2),
-(4, 4),
-(5, 5),
-(6, 5),
-(7, 5),
-(8, 5);
+(1, 2),
+(2, 8),
+(3, 14),
+(4, 5),
+(5, 10),
+(6, 12),
+(7, 3),
+(8, 6);
 
 
 create view vOffers as select o.*, c.name, u.first_name, u.last_name, u.phone_number from offers o 

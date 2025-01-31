@@ -57,8 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // edit profile phone number validation
     const phoneInput = document.getElementById('phoneNumber');
-    const phoneForm = phoneInput.closest('form');
-    if(phoneInput && phoneForm){
+    if(phoneInput){
+        const phoneForm = phoneInput.closest('form');
         phoneInput.addEventListener('input', () => {
             phoneInput.value = phoneInput.value.replace(/[^0-9]/g, '');
         })

@@ -49,24 +49,37 @@
                 }
             ?>
             <h2>Edytuj ofertę</h2>
-            <form class="offer" action="/edit-offer/<?=$offer->getId()?>" method="post" enctype="multipart/form-data">
+            <form class="offer" action="/edit-offer/<?=$offer['id']?>" method="post" enctype="multipart/form-data">
                 <label for="title">
                     Tytuł oferty:
-                    <input type="text" name="title" value="<?=$offer->getTitle()?>" required>
+                    <input type="text" name="title" value="<?=$offer['title']?>" required>
                 </label>
                 <label for="description">
                     Opis oferty:
-                    <textarea name="description" required><?=$offer->getDescription()?></textarea>
+                    <textarea name="description" required><?=$offer['description']?></textarea>
                 </label>
                 <label for="location">
                     Lokalizacja:
-                    <input type="text" name="location" value="<?=$offer->getLocation()?>"  required>
+                    <input type="text" name="location" value="<?=$offer['location']?>"  required>
                 </label>
                 <label for="price">
                     Cena:
                     <span class="price">
-                        <input type="number" name="price" step="0.01" value="<?=$offer->getPrice()?>" required>
+                        <input type="number" name="price" step="0.01" value="<?=$offer['price']?>" required>
                     </span>
+                </label>
+                <label for="categories">
+                    Kategorie:
+                    <select name="categories[]" multiple required>
+                        <?php
+                        $assignedCategories = $this->repository->getOfferCategories($offer['id']);
+                        $assignedCategoryIds = array_column($assignedCategories, 'id');
+                        foreach ($categories as $category) {
+                            $selected = in_array($category['id'], $assignedCategoryIds) ? 'selected' : '';
+                            echo '<option value="' . $category['id'] . '" ' . $selected . '>' . $category['name'] . '</option>';
+                        }
+                        ?>
+                    </select>
                 </label>
                 <label for="image">
                     Zdjecie:
@@ -74,8 +87,8 @@
                         <input type="file" name="file" accept="image/*">
                         <div class="image-btn">
                             <?php 
-                            if($offer->getImage()) {
-                                echo $offer->getImage();
+                            if($offer['image']) {
+                                echo $offer['image'];
                             } else {
                                 echo "Wybierz zdjecie";
                             }

@@ -68,12 +68,16 @@
                         <input type="number" name="price" step="0.01" required>
                     </span>
                 </label>
-                <label for="category">
+                <label for="categories">
                     Kategorie:
-                    <select name="category" required>
+                    <select name="categories[]" multiple required>
                         <?php
-                        foreach ($categories as $category) {
-                            echo '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
+                        if (!empty($categories)) {
+                            foreach ($categories as $category) {
+                                echo '<option value="' . $category['id'] . '">' . $category['name'] . '</option>';
+                            }
+                        } else {
+                            echo '<option value="">Brak dostępnych kategorii</option>';
                         }
                         ?>
                     </select>

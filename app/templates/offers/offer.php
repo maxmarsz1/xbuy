@@ -62,25 +62,35 @@
                     </a>
                 </div>
                 <div class="thumb">
-                    <img src="/../<?= $offer->getImage() ?>" alt="laptop">
+                    <img src="/../<?= $offer['image'] ?>" alt="laptop">
                 </div>
                 <div class="info">
-                    <h2 class="title"><?= $offer->getTitle() ?></h2>
-                    <p class="category"><?= $offer->getCategoryName() ?></p>
-                    <p class="price"><?= $offer->getPrice() ?> zł</p>
+                    <h2 class="title"><?= $offer['title'] ?></h2>
+                    <span class="categories">
+                        <?php
+                        foreach ($categories as $category) {
+                            echo '<p class="category">' . $category . '</p>';
+                        }
+                        ?>
+                    </span>
+                    <p class="price"><?= $offer['price'] ?> zł</p>
                     <div class="contact-block">
                         <button class="contact">Kontakt do sprzedawcy</button>
                         <span class="contact-info">
-                            <p><?= $offer->getUserFirstName()." ".$offer->getUserLastName() ?></p>
-                            <p><?= $offer->getUserPhoneNumber() ?></p>
+                            <?php if ($user): ?>
+                                <p><?= $user['first_name'] . ' ' . $user['last_name'] ?></p>
+                                <p><?= $user['phone_number'] ?></p>
+                            <?php else: ?>
+                                <p>Brak danych kontaktowych</p>
+                            <?php endif; ?>
                         </span>
                     </div>
                     <h4>Lokalizacja</h4>
-                    <p class="location"><?= $offer->getLocation() ?></p>
+                    <p class="location"><?= $offer['location'] ?></p>
                     <h4>Opis oferty</h4>
-                    <p class="description"><?= $offer->getDescription() ?></p>
+                    <p class="description"><?= $offer['description'] ?></p>
                     <h4>Oferta wystawiona</h4>
-                    <p class="date"><?= $offer->getCreatedDate() ?></p>
+                    <p class="date"><?= $offer['created_date'] ?></p>
                 </div>
             </div>
             <!-- <div class="pagination">

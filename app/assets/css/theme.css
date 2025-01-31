@@ -272,6 +272,11 @@ main{
 #offers-container > a{
     text-decoration: none;
 }
+.categories{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
 .offer a{
     text-decoration: none;
 }

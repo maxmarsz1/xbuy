@@ -28,5 +28,6 @@ class UserController extends AppController {
         $_SESSION['messages'][] = "Profil został zaktualizowany pomyślnie";
 
         header('Location: /profile');
+        exit;
     }
 }

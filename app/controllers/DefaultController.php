@@ -10,6 +10,7 @@ class DefaultController extends AppController {
         session_start();
         if($this->isAuthorized()) {
             header('Location: index');
+            exit;
         }
         else{
             $this->render('auth/login');
@@ -20,6 +21,7 @@ class DefaultController extends AppController {
         session_start();
         if($this->isAuthorized()) {
             header('Location: index');
+            exit;
         }
         else{
             $this->render('auth/register');
@@ -33,6 +35,7 @@ class DefaultController extends AppController {
         }
         else{
             header('Location: /login');
+            exit;
         }
     }
 
@@ -41,6 +44,7 @@ class DefaultController extends AppController {
         $userRepository = new UserRepository();
         if(!$this->isAuthorized()) {
             header('Location: /login');
+            exit;
         }
         else if($userRepository->hasContactInfo($_SESSION['user']->id)) {
             $this->render('offers/add-offer');
@@ -49,6 +53,7 @@ class DefaultController extends AppController {
             $offerRepository = new OfferRepository();
             $_SESSION['messages'][] = "Aby dodać ofertę, musisz dodać dane kontaktowe";
             header('Location: /offers');
+            exit;
         }
     }
 
@@ -59,6 +64,7 @@ class DefaultController extends AppController {
         }
         else{
             header('Location: /login');
+            exit;
         }
     }
 
