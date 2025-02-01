@@ -9,7 +9,7 @@ class DefaultController extends AppController {
     public function login() {
         session_start();
         if($this->isAuthorized()) {
-            header('Location: index');
+            header('Location: /');
             exit;
         }
         else{
@@ -20,7 +20,7 @@ class DefaultController extends AppController {
     public function register() {
         session_start();
         if($this->isAuthorized()) {
-            header('Location: index');
+            header('Location: /');
             exit;
         }
         else{
@@ -52,7 +52,7 @@ class DefaultController extends AppController {
         else{
             $offerRepository = new OfferRepository();
             $_SESSION['messages'][] = "Aby dodać ofertę, musisz dodać dane kontaktowe";
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
     }

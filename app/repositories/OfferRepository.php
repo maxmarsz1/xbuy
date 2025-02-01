@@ -22,23 +22,6 @@ class OfferRepository extends Repository{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);    
     }
 
-    public function getPaginatedOffers($offset, $perPage) {
-        $stmt = $this->database->connect()->prepare("
-            SELECT * FROM offers LIMIT :limit OFFSET :offset
-        ");
-        $stmt->bindValue(':limit', $perPage, PDO::PARAM_INT);
-        $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
-
-    public function getTotalOffers() {
-        $stmt = $this->database->connect()->query("
-            SELECT COUNT(*) as total FROM offers
-        ");
-        return $stmt->fetchColumn();
-    }
-
     public function getUserOffers(int $userId): array{
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM public.offers WHERE user_id = :userId
@@ -49,7 +32,7 @@ class OfferRepository extends Repository{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    public function addOffer(Offer $offer, int $user_id): int{
+    public function addOffer(Offer $offer): int{
         $date = new DateTime();
         $pdo = $this->database->connect();
         $stmt = $pdo->prepare('
@@ -65,7 +48,7 @@ class OfferRepository extends Repository{
             $offer->getPrice(),
             $offer->getImage(),
             $date->format('Y-m-d H:i:s'),
-            $user_id
+            $offer->getUserId()
         ]);
 
         return $pdo->lastInsertId();
@@ -155,26 +138,30 @@ class OfferRepository extends Repository{
         return $id;
     }
 
-    public function searchOffers(?int $categoryId = null, ?string $title = null): array {
+    public function searchOffers(?array $categoryIds = null, ?string $title = null): array {
         $query = "SELECT * FROM offers WHERE 1=1";
         $params = [];
-
-        if ($categoryId !== null) {
-            $query .= " AND id IN (SELECT offer_id FROM offers_categories WHERE category_id = :categoryId)";
-            $params[':categoryId'] = $categoryId;
+    
+        if (!empty($categoryIds)) {
+            $placeholders = implode(',', array_map(fn($i) => ":categoryId$i", array_keys($categoryIds)));
+            $query .= " AND id IN (SELECT offer_id FROM offers_categories WHERE category_id IN ($placeholders))";
+            
+            foreach ($categoryIds as $index => $id) {
+                $params[":categoryId$index"] = $id;
+            }
         }
-
+    
         if ($title !== null) {
             $query .= " AND to_tsvector(title) @@ plainto_tsquery(:title)";
             $params[':title'] = $title;
         }
-
+    
         $stmt = $this->database->connect()->prepare($query);
         foreach ($params as $key => &$value) {
             $stmt->bindParam($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
         }
         $stmt->execute();
-
+    
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }

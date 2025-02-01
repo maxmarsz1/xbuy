@@ -27,7 +27,7 @@ class Routing {
         $action = $segments[0];
         $parameters = array_slice($segments, 1);
         if ($action == "" || $action == "index") {
-            $action = 'offers';
+            $action = 'search';
         }
         if (!array_key_exists($action, self::$routes)) {
             die('404 - Page not found');

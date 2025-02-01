@@ -30,9 +30,9 @@ class OfferControler extends AppController {
                 dirname(__DIR__) . self::UPLOAD_DIRECTORY . $image
             );
     
-            $user_id = $_SESSION['user']->id;
-            $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], 1, self::UPLOAD_DIRECTORY . $image);
-            $offer_id = $this->repository->addOffer($offer, $user_id);
+            $user_id = $_SESSION['user']->getId();
+            $offer = new Offer($_POST['title'], $_POST['description'], $_POST['location'], $_POST['price'], $user_id, self::UPLOAD_DIRECTORY . $image);
+            $offer_id = $this->repository->addOffer($offer);
     
             if ($offer_id && !empty($_POST['categories'])) {
                 foreach ($_POST['categories'] as $category_id) {
@@ -41,7 +41,7 @@ class OfferControler extends AppController {
             }
     
             $_SESSION['messages'][] = "Oferta została dodana pomyślnie";
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
     
@@ -49,33 +49,15 @@ class OfferControler extends AppController {
         if (!$this->isAuthorized()) {
             header('Location: /login');
             exit;
-        } else if (!$userRepository->hasContactInfo($_SESSION['user']->id)) {
+        } else if (!$userRepository->hasContactInfo($_SESSION['user']->getId())) {
             $_SESSION['messages'][] = "Aby dodać ofertę, musisz dodać dane kontaktowe";
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
     
-        $categories = $this->repository->getAllCategories();
-        return $this->render('offers/add-offer', ['categories' => $categories]);
+        return $this->render('offers/add-offer');
     }
 
-    public function offers() {
-        session_start();
-    
-        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-        $perPage = 10;
-    
-        $offset = ($page - 1) * $perPage;
-        $offers = $this->repository->getPaginatedOffers($offset, $perPage);
-        $totalOffers = $this->repository->getTotalOffers();
-        $totalPages = ceil($totalOffers / $perPage);
-    
-        return $this->render('offers/offers', [
-            'offers' => $offers,
-            'currentPage' => $page,
-            'totalPages' => $totalPages,
-        ]);
-    }
 
     public function offer(int $id) {
         session_start();
@@ -84,11 +66,6 @@ class OfferControler extends AppController {
         
         if ($offer) {
             $categories = $this->repository->getOfferCategories($id);
-            $categoryNames = [];
-            foreach ($categories as $category) {
-                $categoryNames[] = $category['name'];
-            }
-            
             $user = $this->repository->getOfferUser($id);
             
             $date = date('d.m.Y\\r. \\o \\g\\o\\d\\z. H:i', strtotime($offer['created_date']));
@@ -96,18 +73,18 @@ class OfferControler extends AppController {
             
             return $this->render('offers/offer', [
                 'offer' => $offer,
-                'categories' => $categoryNames,
+                'categories' => $categories,
                 'user' => $user,
             ]);
         } else {
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
     }
 
     public function myOffers(){
         session_start();
-        $user_id = $_SESSION['user']->id;
+        $user_id = $_SESSION['user']->getId();
         $offers = $this->repository->getUserOffers($user_id);
 
         return $this->render('profile/my-offers', ['offers' => $offers, 'messages' => $this->message]);
@@ -117,13 +94,16 @@ class OfferControler extends AppController {
         session_start();
         $this->repository->removeOffer($id);
         $_SESSION['messages'][] = "Oferta została usunięta pomyślnie";
-        header('Location: /offers');
+        header('Location: /');
         exit;
     }
 
     public function editOffer(int $id) {
         session_start();
-        if ($this->isPost()) {
+
+        $offer = $this->repository->getOffer($id);
+
+        if ($this->isPost() && $_SESSION['user']->getId() == $offer['user_id']) {
             if (!isset($_POST['title']) || !isset($_POST['description']) || !isset($_POST['location']) || !isset($_POST['price']) || !isset($_POST['categories'])) {
                 $_SESSION['messages'][] = "Wypełnij wszystkie pola";
                 return $this->render('offers/edit-offer', ['offer' => $this->repository->getOffer($id)]);
@@ -142,31 +122,34 @@ class OfferControler extends AppController {
                 $_POST['description'],
                 $_POST['location'],
                 $_POST['price'],
-                $_SESSION['user']->id,
+                $_SESSION['user']->getId(),
                 isset($image) ? self::UPLOAD_DIRECTORY . $image : $this->repository->getOffer($id)['image']
             );
             $this->repository->editOffer($id, $offer->getTitle(), $offer->getDescription(), $offer->getLocation(), $offer->getPrice(), $offer->getImage());
             $this->repository->updateOfferCategories($id, $_POST['categories']);
             
             $_SESSION['messages'][] = "Oferta została edytowana pomyślnie";
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
     
         $offer = $this->repository->getOffer($id);
-        if (!$offer || !isset($_SESSION['user']) || $offer['user_id'] != $_SESSION['user']->id) {
+        if (!$offer || !isset($_SESSION['user']) || $offer['user_id'] != $_SESSION['user']->getId()) {
             $_SESSION['messages'][] = "Oferta nie istnieje, lub nie masz dostępu do niej";
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
-        $categories = $this->repository->getAllCategories();
         $assignedCategories = $this->repository->getOfferCategories($id);
     
         return $this->render('offers/edit-offer', [
             'offer' => $offer,
-            'categories' => $categories,
             'assignedCategories' => $assignedCategories,
         ]);
+    }
+
+    public function search() {
+        session_start();
+        return $this->render('offers/search');
     }
 
     private function validate(array $file): bool

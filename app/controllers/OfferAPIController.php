@@ -10,10 +10,12 @@ class OfferAPIController {
     }
 
     public function searchOffers() {
-        $categoryId = isset($_GET['category']) ? (int)$_GET['category'] : null;
+        $categories = isset($_GET['categories']) ? explode(',', $_GET['categories']) : [];
         $title = $_GET['title'] ?? null;
 
-        $offers = $this->offerRepository->searchOffers($categoryId, $title);
+        $categoryIds = array_filter(array_map('intval', $categories));
+
+        $offers = $this->offerRepository->searchOffers($categoryIds, $title);
 
         header('Content-Type: application/json');
         echo json_encode([

@@ -1,13 +1,13 @@
 <?php
 
 class User{
-    public $username;
-    public $password;
-    public $id;
-    public $role;
-    public $firstName;
-    public $lastName;
-    public $phoneNumber;
+    private $username;
+    private $password;
+    private $id;
+    private $role;
+    private $firstName;
+    private $lastName;
+    private $phoneNumber;
 
     public function __construct($username, $password, $id, $role, $firstName, $lastName, $phoneNumber) {
         $this->username = $username;
@@ -17,6 +17,14 @@ class User{
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->phoneNumber = $phoneNumber;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function getUsername() {

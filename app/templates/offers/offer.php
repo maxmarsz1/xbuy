@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+US+Trad:wght@100..400&family=Poppins&display=swap" rel="stylesheet">
 </head>
 <body id="offer">
-    <header>
+<header>
         <a href="/index">
             <img src="../assets/images/logo.svg" alt="logo">
         </a>
@@ -24,7 +24,7 @@
                 <div class="dropdown-content">
                     <?php
                     foreach ($_SESSION['categories'] as $category) {
-                        echo '<a href="/searchOffers?category='.$category['id'].'">'.$category['name'].'</a>';
+                        echo '<a href="/search?categories='.$category['id'].'">'.$category['name'].'</a>';
                     }
                     ?>
                 </div>
@@ -40,6 +40,7 @@
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
                 <img id="mobile-search-icon" class="hidden-desktop" src="../assets/images/search_black.svg" alt="search">
+                <div id="search-results"></div>
             </li>
             <li id="hamburger" class="hidden-desktop"><img src="../assets/images/hamburger.svg" alt="hamburger"></li>
         </ul>
@@ -54,7 +55,7 @@
                     <div class="dropdown-content">
                         <?php
                         foreach ($_SESSION['categories'] as $category) {
-                            echo '<a href="/searchOffers?category='.$category['id'].'">'.$category['name'].'</a>';
+                            echo '<a href="/search?categories='.$category['id'].'">'.$category['name'].'</a>';
                         }
                         ?>
                     </div>
@@ -62,9 +63,9 @@
 
                 <?php
                 if (isset($_SESSION['user'])) {
-                    echo '<li class="hidden-mobile"><a href="/profile">Konto</a></li>';
+                    echo '<li><a href="/profile">Konto</a></li>';
                 } else {
-                    echo '<li class="hidden-mobile"><a href="/login">Zaloguj się</a></li>';
+                    echo '<li><a href="/login">Zaloguj się</a></li>';
                 }
                 ?>
             </ul>
@@ -81,7 +82,7 @@
             ?>
             <div id="offer-container">
                 <div class="back">
-                    <a href="/offers">
+                    <a href="/">
                         <img src="../assets/images/arrow.svg" alt="arrow">
                         Powrót do ogłoszeń
                     </a>
@@ -94,7 +95,7 @@
                     <span class="categories">
                         <?php
                         foreach ($categories as $category) {
-                            echo '<p class="category">' . $category . '</p>';
+                            echo '<a href="/search?categories=' . $category['id'] . '"><p class="category">' . $category['name'] . '</p></a>';
                         }
                         ?>
                     </span>
@@ -118,11 +119,6 @@
                     <p class="date"><?= $offer['created_date'] ?></p>
                 </div>
             </div>
-            <!-- <div class="pagination">
-                <a href="" class="active">1</a>
-                <a href="">2</a>
-                <a href="">3</a>
-            </div> -->
         </div>
     </main>
     <footer>
@@ -158,6 +154,7 @@
         
     </footer>
     <div id="dimmed"></div>
-    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/theme.js" defer></script>
+    <script src="../assets/js/search.js" defer></script>
 </body>
 </html>

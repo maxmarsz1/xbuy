@@ -24,16 +24,23 @@
                 <div class="dropdown-content">
                     <?php
                     foreach ($_SESSION['categories'] as $category) {
-                        echo '<a href="/searchOffers?category='.$category['id'].'">'.$category['name'].'</a>';
+                        echo '<a href="/search?categories='.$category['id'].'">'.$category['name'].'</a>';
                     }
                     ?>
                 </div>
             </li>
-            <li class="hidden-mobile"><a href="/profile">Konto</a></li>
+            <?php
+            if (isset($_SESSION['user'])) {
+                echo '<li class="hidden-mobile"><a href="/profile">Konto</a></li>';
+            } else {
+                echo '<li class="hidden-mobile"><a href="/login">Zaloguj się</a></li>';
+            }
+            ?>
             <li id="search-container">
                 <input id="search-input" class="hidden-mobile" type="text" placeholder="Wyszukaj...">
                 <img id="search-icon" class="hidden-mobile" src="../assets/images/search.svg" alt="search">
                 <img id="mobile-search-icon" class="hidden-desktop" src="../assets/images/search_black.svg" alt="search">
+                <div id="search-results"></div>
             </li>
             <li id="hamburger" class="hidden-desktop"><img src="../assets/images/hamburger.svg" alt="hamburger"></li>
         </ul>
@@ -48,13 +55,19 @@
                     <div class="dropdown-content">
                         <?php
                         foreach ($_SESSION['categories'] as $category) {
-                            echo '<a href="/searchOffers?category='.$category['id'].'">'.$category['name'].'</a>';
+                            echo '<a href="/search?categories='.$category['id'].'">'.$category['name'].'</a>';
                         }
                         ?>
                     </div>
                 </li>
 
-                <li><a href="/profile">Konto</a></li>
+                <?php
+                if (isset($_SESSION['user'])) {
+                    echo '<li><a href="/profile">Konto</a></li>';
+                } else {
+                    echo '<li><a href="/login">Zaloguj się</a></li>';
+                }
+                ?>
             </ul>
         </div>
     </header>
@@ -122,6 +135,7 @@
         
     </footer>
     <div id="dimmed"></div>
-    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/theme.js" defer></script>
+    <script src="../assets/js/search.js" defer></script>
 </body>
 </html>

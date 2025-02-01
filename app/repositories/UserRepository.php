@@ -55,10 +55,24 @@ class UserRepository extends Repository{
 
     public function getAllUsers(): array {
         $stmt = $this->database->connect()->prepare('
-            SELECT * FROM public.users
+            SELECT * FROM public.users ORDER BY id
         ');
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $usersRaw = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $users = [];
+        foreach ($usersRaw as $user) {
+            $users[] = new User(
+                $user['username'],
+                $user['password'],
+                $user['id'],
+                $user['role'],
+                $user['first_name'],
+                $user['last_name'],
+                $user['phone_number']
+            );
+        }
+        return $users;
     }
 
     public function register(string $username, string $password) {

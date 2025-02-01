@@ -7,7 +7,7 @@ class AdminController extends AppController
     public function dashboard(){
         session_start();
         if(!$this->isAuthorizedAsAdmin()) {
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
         $userRepository = new UserRepository();
@@ -18,7 +18,7 @@ class AdminController extends AppController
     public function editUser($id) {
         session_start();
         if(!$this->isAuthorizedAsAdmin()) {
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
         
@@ -43,7 +43,7 @@ class AdminController extends AppController
     public function deleteUser($id) {
         session_start();
         if(!$this->isAuthorizedAsAdmin()) {
-            header('Location: /offers');
+            header('Location: /');
             exit;
         }
         $userRepository = new UserRepository();

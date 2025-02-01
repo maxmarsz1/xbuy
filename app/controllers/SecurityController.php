@@ -14,9 +14,10 @@ class SecurityController extends AppController {
         $user = $userRepository->getUser($username);
         
 
-        if($user && $username == $user->username && $password == $user->password){
+        if($user && $username == $user->getUsername() && $password == $user->getPassword()){
             $_SESSION['user'] = $user;
-            header('Location: /index');
+            $_SESSION['messages'][] = "Zalogowano jako " . $user->getUsername();
+            header('Location: /');
             exit;
         } else {
             $_SESSION['messages'][] = "Błędne dane logowania";
@@ -28,7 +29,9 @@ class SecurityController extends AppController {
     public function logout(){
         session_start();
         session_destroy();
-        header('Location: /index');
+        session_start();
+        $_SESSION['messages'][] = "Wylogowano pomyślnie";
+        header('Location: /');
         exit;
     }
 
@@ -74,7 +77,7 @@ class SecurityController extends AppController {
         $oldPassword = sha1($_POST['oldPassword']);
         $newPassword = sha1($_POST['newPassword']);
         $newPassword1 = sha1($_POST['newPassword1']);
-        if($user->password != $oldPassword){
+        if($user->getPassword() != $oldPassword){
             $_SESSION['messages'][] = "Podane obecne hasło jest niepoprawne";
             header('Location: /change-password');
             exit;
@@ -84,8 +87,8 @@ class SecurityController extends AppController {
             header('Location: /change-password');
             exit;
         }
-        $userRepository->updatePassword($user->id, $newPassword);
-        $user = $userRepository->getUser($user->username);
+        $userRepository->updatePassword($user->getId(), $newPassword);
+        $user = $userRepository->getUser($user->getUsername());
         $_SESSION['user'] = $user;
         $_SESSION['messages'][] = "Zmiana hasła przebiegła pomyślnie";
         header('Location: /profile');

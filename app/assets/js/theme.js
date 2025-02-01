@@ -15,9 +15,11 @@ document.addEventListener('DOMContentLoaded', () => {
         searchInput.focus();
     })
     searchInput.addEventListener('blur', () => {
-        searchInput.classList.add('hidden-mobile');
-        searchIcon.classList.add('hidden-mobile');
-        mobileSearchIcon.style.display = 'block';
+        setTimeout(() => {
+            searchInput.classList.add('hidden-mobile');
+            searchIcon.classList.add('hidden-mobile');
+            mobileSearchIcon.style.display = 'block';
+        }, 300)
     })
 
     // mobile menu
@@ -35,7 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
 
-    // add offer/edit offer image handling
+    // add-offer/edit-offer - image handling
     const imageInput = document.querySelector('.image input[type="file"]');
     const imageBtn = document.querySelector('.image .image-btn');
     if(imageInput && imageBtn){
@@ -48,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    // offer page - contact info toggling
+    // offer - contact info toggling
     const contactButton = document.querySelector("button.contact");
     const contactInfo = document.querySelector(".contact-info");
     if(contactButton && contactInfo){
@@ -57,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
-    // edit profile phone number validation
+    // edit-profile - phone number validation
     const phoneInput = document.getElementById('phoneNumber');
     if(phoneInput){
         const phoneForm = phoneInput.closest('form');
@@ -72,6 +74,26 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     }
 
+    //edit-profile - firstName and lastName validation
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    if(firstNameInput && lastNameInput){
+        const profileForm = firstNameInput.closest('form');
+        firstNameInput.addEventListener('input', () => {
+            firstNameInput.value = firstNameInput.value.replace(/[^A-Za-ząćęłńóśżź]/g, '');
+        })
+        lastNameInput.addEventListener('input', () => {
+            lastNameInput.value = lastNameInput.value.replace(/[^A-Za-ząćęłńóśżź]/g, '');
+        })
+        profileForm.addEventListener('submit', (e) => {
+            if(firstNameInput.value.length < 2 || lastNameInput.value.length < 2){
+                e.preventDefault();
+                alert('Imię i nazwisko musi mieć conajmniej 2 znaki');
+            }
+        })
+    }
+
+    // navbar dropdown button handling
     const dropdownButton = document.querySelectorAll('.dropdown-button');
     if(dropdownButton){
         dropdownButton.forEach(button => {
@@ -81,6 +103,4 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
-
-    
 })

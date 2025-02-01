@@ -21,6 +21,7 @@ Routing::post('add-offer', 'OfferControler');
 Routing::get('edit-offer', 'OfferControler');
 Routing::post('edit-offer', 'OfferControler');
 Routing::get('delete-offer', 'OfferControler');
+Routing::get('search', 'OfferControler');
 
 Routing::get('searchOffers', 'OfferAPIController');
 

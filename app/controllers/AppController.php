@@ -18,7 +18,7 @@ class AppController{
     }
 
     protected function isAuthorizedAsAdmin(): bool {
-        return isset($_SESSION['user']) && $_SESSION['user']->role === 'admin';
+        return isset($_SESSION['user']) && $_SESSION['user']->getRole() === 'admin';
     }
 
     private function setSessionCategories() {

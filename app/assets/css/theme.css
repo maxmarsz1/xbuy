@@ -20,14 +20,14 @@ body{
 body.no-scroll{
     overflow: hidden;
 }
-form input:not([type="submit"], [type="checkbox"], [type="radio"], [type="file"]), form textarea{
+input:not([type="submit"], [type="checkbox"], [type="radio"], [type="file"]), form textarea{
     padding: .4rem 1rem;
     font-size: 1.1rem;
     border-radius: 50px;
     border: 1px solid black;
     background-color: transparent;
 }
-form input[type="submit"]{
+input[type="submit"], .search-container button{
     padding: .6rem 4rem;
     font-size: 1.1rem;
     border-radius: 50px;
@@ -35,6 +35,7 @@ form input[type="submit"]{
     background-color: var(--main-color);
     color: white;
     cursor: pointer;
+    transition: .3s all ease;
 }
 form select{
     background: transparent;
@@ -156,8 +157,76 @@ header{
 .links a{
     text-decoration: none;
 }
-.links a:hover, .links li:hover{
+.links a:hover, .links p:hover{
     text-decoration: underline;
+}
+.search-container input[type="text"]{
+    width: 100%;
+    margin-top: 1rem;
+}
+.search-container button:hover{
+    background-color: var(--secondary-color);
+}
+.search-container #category-toggles{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 1rem 0;
+}
+.search-container input[type='checkbox']{
+    display: none;
+}
+.search-container input[type='checkbox']:checked + label{
+    background-color: var(--main-color);
+    color: white;
+}
+.search-container label{
+    padding: .3rem .7rem;
+    border-radius: 50px;
+    border: 1px solid black;
+    cursor: pointer;
+    transition: .3s all ease;
+}
+.search-container label:hover{
+    background-color: var(--main-color);
+}
+#search-results {
+    position: absolute;
+    top: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
+    display: none;
+}
+#search-results .offer {
+    border-bottom: 1px solid black;
+    display: flex;
+    gap: 10px;
+}
+
+#search-results .offer:last-child {
+    border-bottom: 0;
+}
+#search-results img {
+    width: 50px;
+    height: auto;
+    object-fit: contain;
+}
+#search-results .offer p.title{
+    -webkit-line-clamp: 1;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+#search-results .offer p.price{
+    color: var(--main-color);
 }
 #search-container input{
     border: none;
@@ -184,7 +253,7 @@ header{
     bottom: 0;
     left: 100px;
     padding: 2rem;
-    z-index: 10;
+    z-index: 1000000;
     background-color: white;
     transition: .3s all ease;
     transform: translateX(9999px);
@@ -208,6 +277,7 @@ header{
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: 999999;
     background-color: rgba(0,0,0,0.7);
 }
 #dimmed.active{
@@ -284,6 +354,7 @@ span.categories{
 }
 select.categories{
     padding: .6rem 2rem;
+    border-radius: 50px 0 0 50px;
 }
 li.hidden-mobile.dropdown{
     position: relative;
@@ -398,6 +469,13 @@ li.hidden-mobile.dropdown:hover .dropdown-content{
     border-radius: 50px;
     font-size: .9rem;
     font-weight: 500;
+    /* transition: .3s all ease-in-out; */
+}
+#offer-container .info .category:hover{
+    outline: 1px solid black
+}
+#offer-container .info .categories a{
+    text-decoration: none;
 }
 #offer-container .info .price{
     color: var(--main-color);
@@ -519,7 +597,7 @@ form:is(.offer, .profile) label{
 }
 form:is(.offer, .profile) textarea{
     width: 100% !important;
-    min-height: 5rem;
+    min-height: 180px;
     resize: vertical;
     padding: .7rem 1rem;
     border-radius: 30px 30px 0 30px;
@@ -662,6 +740,12 @@ form:is(.offer, .profile) .image .image-btn:hover{
     #account-blocks .account-block{
         width: 100%;
         margin: 1.3rem 0;
+    }
+    #offer-container{
+        flex-direction: column;
+    }
+    #offer-container .thumb img{
+        max-width: 500px;
     }
 }
 @media (min-width: 769px){

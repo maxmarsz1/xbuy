@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oferty | XBuy</title>
+    <title>Wyszukiwanie | XBuy</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/theme.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,38 +80,22 @@
                 }
             }
             ?>
-            <h2>Najnowsze oferty</h2>
-            <div id="offers-container">
-            <?php
-            foreach ($offers as $offer) {
-                echo '<a href="offer/'.$offer['id'].'" class="offer">
-                    <div class="thumb">
-                        <img src="' . (isset($offer['image']) && $offer['image'] !== '' ? $offer['image'] : '../assets/images/offer.png') . '" class="offer-image" alt="offer image">
-                    </div>
-                    <div class="offer-info">
-                        <div class="top">
-                            <h3>'.$offer['title'].'</h3>
-                            <p class="location">'.$offer['location'].'</p>
-                        </div>
-                        <p class="price">'.$offer['price'].' zł</p>
-                    </div>
-                </a>';
-            }
-            ?>
+            <h2>Wyszukiwarka</h2>
+            <div class="search-container">
+                <input id="search-search-input" type="text" placeholder="Wyszukaj oferty...">
+
+                <div id="category-toggles">
+                    <?php
+                    foreach ($_SESSION['categories'] as $category) {
+                        echo '<input type="checkbox" id="category' . $category['id'] . '" name="category" value="' . $category['id'] . '"><label for="category' . $category['id'] . '">' . $category['name'] . '</label>';
+                    }
+                    ?>
+                </div>
+                <button id="search-button">Search</button>
             </div>
-            <div class="pagination">
-            <?php if ($currentPage > 1): ?>
-                <a href="?page=<?= $currentPage - 1 ?>">Poprzednia</a>
-            <?php endif; ?>
-
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <a href="?page=<?= $i ?>" class="<?= $i === $currentPage ? 'active' : '' ?>"><?= $i ?></a>
-            <?php endfor; ?>
-
-            <?php if ($currentPage < $totalPages): ?>
-                <a href="?page=<?= $currentPage + 1 ?>">Następna</a>
-            <?php endif; ?>
-        </div>
+            <div id="offers-container">
+                    Wyszukaj oferty
+            </div>
         </div>
     </main>
     <footer>
@@ -149,5 +133,6 @@
     <div id="dimmed"></div>
     <script src="../assets/js/theme.js" defer></script>
     <script src="../assets/js/search.js" defer></script>
+    <script src="../assets/js/searchPage.js" defer></script>
 </body>
 </html>
