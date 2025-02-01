@@ -66,7 +66,7 @@ EXECUTE FUNCTION archive_offer();
 INSERT INTO users (username, password, first_name, last_name, phone_number, role) VALUES
 ('john_doe', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'John', 'Doe', '48500100200', 'user'),
 ('jane_smith', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Jane', 'Smith', '48500300400', 'user'),
-('admin', 'ad9056406390cfaa42b23010b8287717eb0aaa46', 'Adam', 'Admin', '48500500600', 'admin');
+('admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'Adam', 'Admin', '48500500600', 'admin');
 
 INSERT INTO categories (id, name, category_id) VALUES
 (1, 'Electronics', NULL),
