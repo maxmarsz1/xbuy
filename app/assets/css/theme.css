@@ -17,6 +17,9 @@ body{
     color: black;
     font-family: 'Poppins', sans-serif;
 }
+body.no-scroll{
+    overflow: hidden;
+}
 form input:not([type="submit"], [type="checkbox"], [type="radio"], [type="file"]), form textarea{
     padding: .4rem 1rem;
     font-size: 1.1rem;
@@ -148,11 +151,12 @@ header{
 }
 .links li{
     display: flex;
+    cursor: pointer;
 }
 .links a{
     text-decoration: none;
 }
-.links a:hover{
+.links a:hover, .links li:hover{
     text-decoration: underline;
 }
 #search-container input{
@@ -161,6 +165,7 @@ header{
     background-color: var(--main-color);
     padding: .5rem 1.2rem;
     border-radius: 50px;
+    color: white;
 }
 #search-container {
     position: relative;
@@ -272,10 +277,58 @@ main{
 #offers-container > a{
     text-decoration: none;
 }
-.categories{
+span.categories{
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
+}
+select.categories{
+    padding: .6rem 2rem;
+}
+li.hidden-mobile.dropdown{
+    position: relative;
+}
+li.hidden-mobile.dropdown:hover .dropdown-content{
+    display: flex;
+}   
+.hidden-mobile.dropdown .dropdown-content{
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    background: white;
+    padding: 1rem 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 1px solid black;
+    gap: 10px;
+    display: none;
+}
+#mobile-menu{
+    overflow: auto;
+}
+#mobile-menu li.dropdown{
+    flex-direction: column;
+}
+#mobile-menu li.dropdown .dropdown-button{
+    cursor: pointer;
+}
+#mobile-menu li.dropdown .dropdown-button:hover{
+    text-decoration: underline;
+}
+#mobile-menu li.dropdown .dropdown-content{
+    border: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0 2rem;
+    max-height: 0;
+    transition: .3s all ease-in-out;
+    overflow: hidden;
+}
+#mobile-menu li.dropdown .dropdown-content.active{
+    max-height: 10000px;
+    padding: 1rem 2rem;
 }
 .offer a{
     text-decoration: none;

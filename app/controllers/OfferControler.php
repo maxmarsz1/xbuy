@@ -2,7 +2,7 @@
 
 require_once 'AppController.php';
 require_once __DIR__ .'/../models/Offer.php';
-require_once __DIR__ . '/../repository/OfferRepository.php';
+require_once __DIR__ . '/../repositories/OfferRepository.php';
 
 class OfferControler extends AppController {
 

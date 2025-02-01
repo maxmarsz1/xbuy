@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oferty | XBuy</title>
+    <title><?= $offer['title'] ?> | XBuy</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/theme.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +16,19 @@
         </a>
         <ul class="links">
             <li class="hidden-mobile"><a href="/add-offer">Dodaj ogłoszenie</a></li>
-            <li class="hidden-mobile"><a href="/categories">
-                Kategorie
-                <img src="../assets/images/dropdown.svg" alt="dropdown">
-            </a></li>
+            <li class="dropdown hidden-mobile">
+                <p>
+                    Kategorie
+                    <img src="../assets/images/dropdown.svg" alt="dropdown">
+                </p>
+                <div class="dropdown-content">
+                    <?php
+                    foreach ($_SESSION['categories'] as $category) {
+                        echo '<a href="/searchOffers?category='.$category['id'].'">'.$category['name'].'</a>';
+                    }
+                    ?>
+                </div>
+            </li>
             <?php
             if (isset($_SESSION['user'])) {
                 echo '<li class="hidden-mobile"><a href="/profile">Konto</a></li>';
@@ -37,11 +46,27 @@
         <div id="mobile-menu">
             <ul class="links">
                 <li><a href="/add-offer">Dodaj ogłoszenie</a></li>
-                <li class="dropdown"><a href="/categories">
-                    Kategorie
-                    <img src="../assets/images/dropdown.svg" alt="dropdown">
-                </a></li>
-                <li><a href="/profile">Konto</a></li>
+                <li class="dropdown">
+                    <p class="dropdown-button">
+                        Kategorie
+                        <img src="../assets/images/dropdown.svg" alt="dropdown">
+                    </p>
+                    <div class="dropdown-content">
+                        <?php
+                        foreach ($_SESSION['categories'] as $category) {
+                            echo '<a href="/searchOffers?category='.$category['id'].'">'.$category['name'].'</a>';
+                        }
+                        ?>
+                    </div>
+                </li>
+
+                <?php
+                if (isset($_SESSION['user'])) {
+                    echo '<li class="hidden-mobile"><a href="/profile">Konto</a></li>';
+                } else {
+                    echo '<li class="hidden-mobile"><a href="/login">Zaloguj się</a></li>';
+                }
+                ?>
             </ul>
         </div>
     </header>

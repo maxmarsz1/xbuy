@@ -1,8 +1,8 @@
 <?php
 
 require_once 'AppController.php';
-require_once __DIR__.'/../repository/OfferRepository.php';
-require_once __DIR__.'/../repository/UserRepository.php';
+require_once __DIR__.'/../repositories/OfferRepository.php';
+require_once __DIR__.'/../repositories/UserRepository.php';
 
 class DefaultController extends AppController {
 

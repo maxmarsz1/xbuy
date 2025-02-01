@@ -3,6 +3,7 @@
 require_once 'controllers/DefaultController.php';
 require_once 'controllers/SecurityController.php';
 require_once 'controllers/OfferControler.php';
+require_once 'controllers/OfferAPIController.php';
 require_once 'controllers/UserController.php';
 require_once 'controllers/AdminController.php';
 
@@ -28,11 +29,6 @@ class Routing {
         if ($action == "" || $action == "index") {
             $action = 'offers';
         }
-        if ($action === 'remove-offer' && $_SERVER['REQUEST_METHOD'] === 'GET') {
-            header("Location: /offers");
-            exit();
-        }
-
         if (!array_key_exists($action, self::$routes)) {
             die('404 - Page not found');
         }

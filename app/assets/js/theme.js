@@ -24,12 +24,14 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.addEventListener('click', () => {
         mobileMenu.classList.toggle('active');
         dimmed.style.display = 'block';
+        document.body.classList.toggle('no-scroll');
     })
 
     dimmed.addEventListener('click', () => {
         const activeElement = document.querySelector('.active');
         activeElement.classList.remove('active');
         dimmed.style.display = 'none';
+        document.body.classList.toggle('no-scroll');
     })
 
 
@@ -67,6 +69,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 e.preventDefault();
                 alert('Numer telefonu musi mieć conajmniej 8 cyfr');
             }
+        })
+    }
+
+    const dropdownButton = document.querySelectorAll('.dropdown-button');
+    if(dropdownButton){
+        dropdownButton.forEach(button => {
+            button.addEventListener('click', () => {
+                const dropdown = button.nextElementSibling;
+                dropdown.classList.toggle('active');
+            })
         })
     }
 

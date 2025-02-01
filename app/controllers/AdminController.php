@@ -1,6 +1,6 @@
 <?php
 
-require_once 'repository/UserRepository.php';
+require_once 'repositories/UserRepository.php';
 
 class AdminController extends AppController
 {

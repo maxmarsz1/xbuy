@@ -4,7 +4,6 @@ require_once 'Repository.php';
 require_once __DIR__.'/../models/Offer.php';
 
 class OfferRepository extends Repository{
-
     public function getOffer(int $id): ?array {
         $stmt = $this->database->connect()->prepare('
             SELECT * FROM offers WHERE id = :id
@@ -154,5 +153,28 @@ class OfferRepository extends Repository{
         $stmt->execute();
 
         return $id;
+    }
+
+    public function searchOffers(?int $categoryId = null, ?string $title = null): array {
+        $query = "SELECT * FROM offers WHERE 1=1";
+        $params = [];
+
+        if ($categoryId !== null) {
+            $query .= " AND id IN (SELECT offer_id FROM offers_categories WHERE category_id = :categoryId)";
+            $params[':categoryId'] = $categoryId;
+        }
+
+        if ($title !== null) {
+            $query .= " AND to_tsvector(title) @@ plainto_tsquery(:title)";
+            $params[':title'] = $title;
+        }
+
+        $stmt = $this->database->connect()->prepare($query);
+        foreach ($params as $key => &$value) {
+            $stmt->bindParam($key, $value, is_int($value) ? PDO::PARAM_INT : PDO::PARAM_STR);
+        }
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
