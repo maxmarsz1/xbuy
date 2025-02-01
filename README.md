@@ -12,7 +12,9 @@ docker-compose up -d
 ```
 Project will be available at [localhost:8080](http://localhost:8080)
 and pgAdmin at [localhost:5050](http://localhost:5050)
+
 Project already has some boilerplate data in the database
+
 Password for admin user is `admin`
 
 ## ERD
